@@ -1,3 +1,6 @@
-# RSS React 2019Q3
+# DATA GRID
 
-### [Task description](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/songbird.md)
+## [TASK DESCRIPTION](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/datagrid.md)
+<hr>
+
+## [TASK DEMO](https://data-grid.netlify.com/)
