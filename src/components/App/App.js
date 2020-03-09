@@ -1,25 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Buttons from '../Buttons';
-import styles from './App.module.scss';
+import {
+  Typography, Chip, Avatar, Grid,
+} from '@material-ui/core';
+import './App.scss';
+import TableRoot from '../Table';
+import TableHeader from '../Header';
 
-
-const App = (props) => {
-  const {
-    counter, onAdd, onSub, onRnd,
-  } = props;
-  return (
-    <>
-      <p className={styles.text}>{counter}</p>
-      <Buttons
-        onAdd={onAdd}
-        onSub={onSub}
-        onRnd={() => onRnd(5)}
+const App = () => (
+  <>
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+    >
+      <Typography variant="h2">
+        Data Grid
+      </Typography>
+      <Chip
+        className="ml-5"
+        color="default"
+        avatar={<Avatar>!</Avatar>}
+        label=" Ctrl + H to show Redux DevTools"
       />
-    </>
-  );
-};
+    </Grid>
+    <TableRoot />
+    {/*<TableHeader />*/}
+  </>
+);
 
 const mapStateToProps = (state) => ({
   counter: state.counter,
@@ -31,11 +41,6 @@ const mapDispatchToProps = (dispatch) => ({
   onRnd: (n) => dispatch({ type: 'RND', payload: n }),
 });
 
-App.propTypes = {
-  counter: PropTypes.number.isRequired,
-  onAdd: PropTypes.func.isRequired,
-  onSub: PropTypes.func.isRequired,
-  onRnd: PropTypes.func.isRequired,
-};
+App.propTypes = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
