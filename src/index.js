@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers/rootReducer';
+import thunk from 'redux-thunk';
+import rootReducer from './store/reducers/rootReducer';
 import App from './components/App';
+import DevTools from './components/reduxDevTool/reduxDevTool';
 
-
-const rootStore = createStore(rootReducer);
-
+// eslint-disable-next-line max-len
+const rootStore = createStore(rootReducer, compose(applyMiddleware(thunk), DevTools.instrument()));
 const root = document.getElementById('root');
 
 const app = (
   <Provider store={rootStore}>
     <App />
+    <DevTools />
   </Provider>
 );
 
