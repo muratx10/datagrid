@@ -5,30 +5,32 @@ import {
   Typography, Chip, Avatar, Grid,
 } from '@material-ui/core';
 import './App.scss';
-import TableHeader from '../Header';
+import { makeStyles } from '@material-ui/core/styles';
 import DataSheet from '../DataSheet';
 
-const App = () => (
-  <>
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-    >
-      <Typography variant="h2">
-        Data Grid
-      </Typography>
-      <Chip
-        className="ml-5"
-        color="default"
-        avatar={<Avatar>!</Avatar>}
-        label=" Ctrl + H to show Redux DevTools"
-      />
-    </Grid>
-    <DataSheet />
-  </>
-);
+const App = () => {
+  return (
+    <>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Typography variant="h2">
+          Data Grid
+        </Typography>
+        <Chip
+          className="ml-5"
+          color="default"
+          avatar={<Avatar>!</Avatar>}
+          label=" Ctrl + H to show Redux DevTools"
+        />
+      </Grid>
+      <DataSheet />
+    </>
+  );
+};
 
 const mapStateToProps = (state) => ({
   counter: state.counter,
