@@ -5,8 +5,8 @@ import {
   Typography, Chip, Avatar, Grid,
 } from '@material-ui/core';
 import './App.scss';
-import TableRoot from '../Table';
 import TableHeader from '../Header';
+import DataSheet from '../DataSheet';
 
 const App = () => (
   <>
@@ -26,8 +26,8 @@ const App = () => (
         label=" Ctrl + H to show Redux DevTools"
       />
     </Grid>
-    <TableRoot />
-    {/*<TableHeader />*/}
+    <TableHeader />
+    <DataSheet />
   </>
 );
 
