@@ -26,7 +26,6 @@ const App = () => (
         label=" Ctrl + H to show Redux DevTools"
       />
     </Grid>
-    <TableHeader />
     <DataSheet />
   </>
 );

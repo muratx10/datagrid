@@ -1,14 +1,17 @@
 import React from 'react';
-import { Grid, lighten, makeStyles } from '@material-ui/core';
+import { Table } from 'react-bootstrap';
+import { makeStyles, lighten } from '@material-ui/core';
 import generateFakeArray from '../../data/fakeDataGenerator';
-
 
 const fakeData = generateFakeArray(300);
 
 const useStyle = makeStyles({
-  headCell: {
-    background: '#252525',
+  header: {
+    position: 'sticky',
+    top: 0,
+    background: lighten('#000', 0.2),
     color: 'white',
+    borderRight: '1px solid gray',
   },
   active: {
     color: 'green',
@@ -16,68 +19,63 @@ const useStyle = makeStyles({
   locked: {
     color: 'red',
   },
-  name: {
-    width: '20px',
-  },
-  item: {
-    textOverflow: 'ellipsis',
-  },
-  hr: {
-    height: '1%',
-    width: '100%',
-    background: lighten('#000', 0.99),
-  },
 });
 
-const dataToProps = (data) => data.map((item, index) => {
+const dataToProps = (data) => data.map((item, idx) => {
   const classes = useStyle();
-  const statusColor = item.isActive ? [classes.active] : [classes.locked];
-  // Fix currencyName when it's value generated as Codes specifically
-  // reserved for testing by faker.js
-  const currency = item.currency === 'Codes specifically reserved for testing purposes' ? 'Euro' : item.currency;
+  const statusColor = item.isActive ? classes.active : classes.locked;
   return (
-    <>
-      <Grid container key={index} alignItems="center" className={classes.container}>
-        <Grid item xs={3}>
-          <span>{item.name}</span>
-        </Grid>
-        <Grid item xs={2}>
-          <span>{item.birthDate}</span>
-        </Grid>
-        <Grid item xs={2}>
-        <span>
-          {item.locationName.city}
-          &nbsp;
-          {item.locationName.zipcode}
-        </span>
-        </Grid>
-        <Grid item xs={2}>
-          <span>{item.bankName}</span>
-        </Grid>
-        <Grid item xs={1}>
-          <span>{currency}</span>
-        </Grid>
-        <Grid item xs={1}>
-          <span>{item.amount}</span>
-        </Grid>
-        <Grid item xs={1}>
-          <span
-            className={statusColor}
-          >
-            {item.isActive ? 'active' : 'locked'}
-          </span>
-        </Grid>
-      </Grid>
-      <hr className={classes.hr} />
-    </>
+    <tr>
+      <td>
+        {item.name}
+      </td>
+      <td>
+        {item.gender ? 'male' : 'female'}
+      </td>
+      <td>
+        {item.birthDate}
+      </td>
+      <td>
+        {item.locationName.city}
+        &nbsp;
+        {item.locationName.zipcode}
+      </td>
+      <td>
+        {item.bankName}
+      </td>
+      <td>
+        {item.currency}
+      </td>
+      <td>
+        {item.amount}
+      </td>
+      <td className={statusColor}>
+        {item.isActive ? 'active' : 'locked'}
+      </td>
+    </tr>
   );
 });
 
 const DataSheet = () => {
+  const classes = useStyle();
   return (
-    <Grid container>
-      {dataToProps(fakeData)}
-    </Grid>
+    <Table>
+      <thead>
+        <tr>
+          <th className={classes.header}>Name</th>
+          <th className={classes.header}>Gender</th>
+          <th className={classes.header}>Date of birth</th>
+          <th className={classes.header}>Address</th>
+          <th className={classes.header}>Bank</th>
+          <th className={classes.header}>Currency</th>
+          <th className={classes.header}>Balance</th>
+          <th className={classes.header}>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {dataToProps(fakeData)}
+      </tbody>
+    </Table>
   );
 };
 

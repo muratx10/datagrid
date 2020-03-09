@@ -10,6 +10,7 @@ const generateFakeData = (id) => ({
   bankName: `${faker.lorem.word()} Bank`.toUpperCase(),
   amount: faker.finance.amount(),
   currency: faker.finance.currencyName(),
+  gender: faker.random.boolean(),
   // eslint-disable-next-line max-len,no-undef
   //status: tableHeader.status[faker.random.number(tableHeader.status.length
   // - 1)], // enum
