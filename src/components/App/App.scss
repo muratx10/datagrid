@@ -12,3 +12,7 @@
 .tableRoot {
   position: relative;
 }
+
+td, th {
+  white-space: nowrap;
+}
