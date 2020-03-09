@@ -27,7 +27,7 @@ const useStyle = makeStyles({
     color: 'red',
   },
   name: {
-    //width: '20px',
+    width: '20px',
   },
 });
 
