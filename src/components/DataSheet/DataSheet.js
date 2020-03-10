@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { FixedSizeList as List } from 'react-window';
 import {
   makeStyles,
   lighten,
 } from '@material-ui/core';
 import generateFakeArray from '../../data/fakeDataGenerator';
 
-const fakeData = generateFakeArray(300);
+const fakeData = generateFakeArray(1000);
 
 const useStyle = makeStyles({
   header: {
@@ -79,6 +80,23 @@ const dataToProps = (data) => data.map((item, idx) => {
 
 const DataSheet = () => {
   const classes = useStyle();
+  const [sortType, setSortType] = useState('');
+  const [fake, setFake] = useState(fakeData);
+  const useSort = () => {
+    const fakeCopy = [...fake];
+    if (sortType === '') {
+      setSortType('asc');
+      fakeCopy.sort((a, b) => a.amount - b.amount);
+      setFake(fakeCopy);
+    } else if (sortType === 'asc') {
+      setSortType('desc');
+      fakeCopy.sort((a, b) => b.amount - a.amount);
+      setFake(fakeCopy);
+    } else {
+      setSortType('');
+      setFake(fakeData);
+    }
+  };
   return (
     <Table hover bordered>
       <thead>
@@ -89,12 +107,15 @@ const DataSheet = () => {
           <th className={classes.header}>Address</th>
           <th className={classes.header}>Bank</th>
           <th className={classes.header}>Currency</th>
-          <th className={classes.header}>Balance</th>
+          <th className={classes.header}>
+            Balance
+            <button onClick={() => useSort()}>s</button>
+          </th>
           <th className={classes.header}>Status</th>
         </tr>
       </thead>
       <tbody>
-        {dataToProps(fakeData)}
+        {dataToProps(fake)}
       </tbody>
     </Table>
   );

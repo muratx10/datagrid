@@ -7,7 +7,7 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "coverage": "jest --coverage",
-    "dev": "webpack-dev-server --mode development --watch --open 'google chrome'",
+    "dev": "webpack-dev-server --mode development --watch",
     "build": "webpack --mode production",
     "lint": "eslint src/"
   },
