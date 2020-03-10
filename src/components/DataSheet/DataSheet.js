@@ -172,6 +172,7 @@ const DataSheet = () => {
       default: return faSort;
     }
   };
+
   return (
     <Container fluid>
       <Row className={cl.header}>
