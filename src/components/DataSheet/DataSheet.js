@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
-import { Table } from 'react-bootstrap';
+import {
+  Badge,
+  Col,
+  Container,
+  Row,
+} from 'react-bootstrap';
 import { FixedSizeList as List } from 'react-window';
 import {
   makeStyles,
   lighten,
 } from '@material-ui/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowDown,
+  faArrowUp,
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
+
 import generateFakeArray from '../../data/fakeDataGenerator';
 
 const _ = require('lodash');
@@ -17,7 +29,10 @@ const useStyle = makeStyles({
     top: 0,
     background: lighten('#000', 0.2),
     color: 'white',
-    borderRight: '1px solid gray',
+    zIndex: 99,
+    height: '40px',
+    lineHeight: '40px',
+    textTransform: 'uppercase',
   },
   active: {
     color: 'green',
@@ -25,63 +40,79 @@ const useStyle = makeStyles({
   locked: {
     color: 'red',
   },
+  hCell: {
+    borderRight: '1px solid gray',
+    textAlign: 'center',
+  },
   fixedCol: {
-    position: 'sticky',
+    position: 'sticky !important',
     left: 0,
-    overflow: 'hidden',
-    borderCollapse: 'separate',
     zIndex: 9,
     background: '#FFF',
   },
   fixedColHeader: {
     position: 'sticky',
     left: 0,
+    zIndex: 99,
+    background: lighten('#000', 0.2),
+  },
+  cell: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
     overflow: 'hidden',
-    borderCollapse: 'separate',
-    zIndex: 10,
+    height: '40px',
+    lineHeight: '40px',
+    borderBottom: '1px solid rgba(0, 0, 0, .15)',
   },
 });
 
 const dataToProps = (data) => data.map((item, idx) => {
-  const classes = useStyle();
-  const statusColor = item.isActive ? classes.active : classes.locked;
+  const cl = useStyle();
+  const statusColor = item.isActive ? cl.active : cl.locked;
+  const statusBadge = item.isActive ? 'success' : 'danger';
   // Fix currency name when faker.js generating name as 'Codes specifically reserved for testing purposes'
   const currency = item.currency === 'Codes specifically reserved for'
-    + ' testing purposes' ? 'Euro' : item.currency;
+  + ' testing purposes' ? 'Euro' : item.currency;
   return (
-    <tr>
-      <td className={classes.fixedCol}>
+    <Row className="align-items-center">
+      <Col className={`${cl.cell} ${cl.fixedCol} fixedCol`} xs={2}>
+        <Badge variant="secondary">
+          {item.id}
+        </Badge>
+        &nbsp;
         {item.name}
-      </td>
-      <td>
+      </Col>
+      <Col xs={1} className={cl.cell}>
         {item.gender ? 'male' : 'female'}
-      </td>
-      <td>
+      </Col>
+      <Col xs={1} className={cl.cell}>
         {item.birthDate}
-      </td>
-      <td>
+      </Col>
+      <Col xs={2} className={cl.cell}>
         {item.locationName.city}
         &nbsp;
         {item.locationName.zipcode}
-      </td>
-      <td>
+      </Col>
+      <Col xs={2} className={cl.cell}>
         {item.bankName}
-      </td>
-      <td>
+      </Col>
+      <Col xs={2} className={cl.cell}>
         {currency}
-      </td>
-      <td>
+      </Col>
+      <Col xs={1} className={`${cl.cell} text-right`}>
         {item.amount}
-      </td>
-      <td className={statusColor}>
-        {item.isActive ? 'active' : 'locked'}
-      </td>
-    </tr>
+      </Col>
+      <Col className={`${statusColor} ${cl.cell} text-center`} xs={1}>
+        <Badge variant={statusBadge}>
+          {item.isActive ? 'active' : 'locked'}
+        </Badge>
+      </Col>
+    </Row>
   );
 });
 
 const DataSheet = () => {
-  const classes = useStyle();
+  const cl = useStyle();
   const [sortType, setSortType] = useState({
     currency: '',
     amount: '',
@@ -134,33 +165,65 @@ const DataSheet = () => {
     setClickedField([field]);
   };
 
+  const sortIcon = (type) => {
+    switch (type) {
+      case 'asc': return faArrowDown;
+      case 'desc': return faArrowDown;
+      default: return faSort;
+    }
+  };
+
   return (
-    <Table hover bordered>
-      <thead>
-        <tr>
-          <th className={`${classes.header} ${classes.fixedColHeader}`}>
-            Name
-            {/* <button onClick={() => useNameSort(event)}>s</button> */}
-          </th>
-          <th className={classes.header}>Gender</th>
-          <th className={classes.header}>Date of birth</th>
-          <th className={classes.header}>Address</th>
-          <th className={classes.header}>Bank</th>
-          <th className={classes.header}>
-            Currency
-            <button onClick={(field) => useSort(event, field = 'currency')}>s</button>
-          </th>
-          <th className={classes.header}>
-            Balance
-            <button onClick={(field) => useSort(event, field = 'amount')}>s</button>
-          </th>
-          <th className={classes.header}>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {dataToProps(fake)}
-      </tbody>
-    </Table>
+    <Container fluid>
+      <Row className={cl.header}>
+        <Col className={`${cl.fixedColHeader} ${cl.hCell} fixedCol`} xs={2}>
+          Name
+          <span>
+            <FontAwesomeIcon icon={faArrowUp} />
+          </span>
+        </Col>
+        <Col className={cl.hCell} xs={1}>
+          Gender
+        </Col>
+        <Col className={cl.hCell} xs={1}>
+          Date of Birth
+        </Col>
+        <Col className={cl.hCell} xs={2}>
+          Address
+        </Col>
+        <Col className={cl.hCell} xs={2}>
+          Bank
+        </Col>
+        <Col className={cl.hCell} xs={2}>
+          Currency
+          &nbsp;
+          &nbsp;
+          <Badge
+            className="button"
+            variant="secondary"
+            onClick={(field) => useSort(event, field = 'amount')}
+          >
+            <FontAwesomeIcon icon={sortIcon(sortType.currency)} />
+          </Badge>
+        </Col>
+        <Col className={cl.hCell} xs={1}>
+          Balance
+          &nbsp;
+          &nbsp;
+          <Badge
+            className="button"
+            variant="secondary"
+            onClick={(field) => useSort(event, field = 'amount')}
+          >
+            <FontAwesomeIcon icon={sortIcon(sortType.amount)} />
+          </Badge>
+        </Col>
+        <Col className={cl.hCell} xs={1}>
+          Status
+        </Col>
+      </Row>
+      {dataToProps(fake)}
+    </Container>
   );
 };
 
