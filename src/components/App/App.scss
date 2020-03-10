@@ -1,12 +1,12 @@
 .text {
-  border: 1px black solid;
-  border-radius: 5px;
-  width: 400px;
-  height: 100px;
   font-size: 45px;
   font-weight: bold;
   line-height: 100px;
+  width: 400px;
+  height: 100px;
   text-align: center;
+  border: 1px black solid;
+  border-radius: 5px;
 }
 
 .tableRoot {
@@ -16,3 +16,43 @@
 td, th {
   white-space: nowrap;
 }
+
+
+.container-fluid {
+  width: 1700px !important;
+  max-width: none !important;
+
+  .fixedCol {
+    overflow: visible;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: -1px;
+      //background: red;
+      transform: translateX(107%);
+      width: 20px;
+      box-shadow: inset 10px 0 8px -8px rgba(0,0,0,.15);
+      display: block;
+    }
+  }
+
+  .button {
+    vertical-align: text-bottom;
+    cursor: pointer;
+    transition: 200ms;
+    background: #E0E0E0;
+    color: black;
+
+    &:hover {
+      background: lighten(#E0E0E0, 50%);
+      box-shadow: 0 0 6px rgba(35, 173, 255, 1);
+    }
+  }
+}
+
+
+
+

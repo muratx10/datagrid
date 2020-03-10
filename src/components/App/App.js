@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Typography, Chip, Avatar, Grid,
+  Typography, Chip, Avatar, Grid, Switch,
 } from '@material-ui/core';
 import './App.scss';
-import { makeStyles } from '@material-ui/core/styles';
 import DataSheet from '../DataSheet';
 
 const App = () => {
@@ -14,9 +13,13 @@ const App = () => {
       <Grid
         container
         direction="row"
-        justify="center"
+        justify="space-around"
         alignItems="center"
       >
+        <div>
+          <Switch color="primary" />
+          <Chip color="default" label="ACTIVE members only" />
+        </div>
         <Typography variant="h2">
           Data Grid
         </Typography>
