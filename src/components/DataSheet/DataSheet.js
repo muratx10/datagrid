@@ -72,7 +72,7 @@ const dataToProps = (data) => data.map((item, idx) => {
   const statusBadge = item.isActive ? 'success' : 'danger';
   // Fix currency name when faker.js generating name as 'Codes specifically reserved for testing purposes'
   const currency = item.currency === 'Codes specifically reserved for'
-  + ' testing purposes' ? 'Euro' : item.currency;
+    + ' testing purposes' ? 'Euro' : item.currency;
   return (
     <Row className="align-items-center">
       <Col className={`${cl.cell} ${cl.fixedCol} fixedCol`} xs={2}>
@@ -167,6 +167,7 @@ const DataSheet = () => {
 
   const sortIcon = (type) => {
     switch (type) {
+      case '': return faSort;
       case 'asc': return faArrowDown;
       case 'desc': return faArrowDown;
       default: return faSort;
@@ -201,7 +202,7 @@ const DataSheet = () => {
           <Badge
             className="button"
             variant="secondary"
-            onClick={(field) => useSort(event, field = 'amount')}
+            onClick={(field) => useSort(event, field = 'currency')}
           >
             <FontAwesomeIcon icon={sortIcon(sortType.currency)} />
           </Badge>
