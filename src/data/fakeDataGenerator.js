@@ -8,7 +8,7 @@ const generateFakeData = (id) => ({
   birthDate: faker.date.past(20).toUTCString(),
   startTime: faker.date.past(5).getTime(),
   bankName: `${faker.lorem.word()} Bank`.toUpperCase(),
-  amount: faker.finance.amount(),
+  amount: Math.trunc(faker.finance.amount()),
   currency: faker.finance.currencyName(),
   gender: faker.random.boolean(),
   // eslint-disable-next-line max-len,no-undef
@@ -21,7 +21,7 @@ const generateFakeData = (id) => ({
   isActive: faker.random.boolean(), // boolean
 });
 
-const generateFakeArray = (recordsCount) => [...new Array(recordsCount)]
+export const generateFakeArray = (recordsCount) => [...new Array(recordsCount)]
   .map((_, index) => generateFakeData(1 + index));
 
-export default generateFakeArray;
+export const fakeData = generateFakeArray(1000);
