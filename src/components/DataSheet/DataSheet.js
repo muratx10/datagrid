@@ -133,6 +133,7 @@ const DataSheet = () => {
         sortTypeImm[field] = 'desc';
         setSortType(sortTypeImm);
         const fakeCopy = _.orderBy(fake, [clickedField[0], field], [sortType[clickedField[0]], 'desc']);
+        console.log(fake);
         setFake(fakeCopy);
       } else {
         const sortTypeImm = { ...sortType };
@@ -169,7 +170,7 @@ const DataSheet = () => {
     switch (type) {
       case '': return faSort;
       case 'asc': return faArrowDown;
-      case 'desc': return faArrowDown;
+      case 'desc': return faArrowUp;
       default: return faSort;
     }
   };
