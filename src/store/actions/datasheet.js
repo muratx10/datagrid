@@ -1,42 +1,60 @@
-import { SORT_ASC } from './actionTypes';
+import {
+  faArrowDown,
+  faArrowUp,
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
+import { SORT, SET_CLICKED, RESET_SORT_TYPE } from './actionTypes';
 
 const _ = require('lodash');
 
-export function sortAsc(sortType, data) {
+export function sorting(sortType, icon, data) {
   return {
-    type: SORT_ASC,
+    type: SORT,
     sortType,
+    icon,
     data,
+  };
+}
+
+export function setClicked(field) {
+  return {
+    type: SET_CLICKED,
+    field,
+  };
+}
+
+export function resetSortType() {
+  return {
+    type: RESET_SORT_TYPE,
   };
 }
 
 export function sort(field) {
   return (dispatch, getState) => {
     const state = getState();
-    if (state.sortType[field] === '') {
-      const { sortType } = state;
-      sortType[field] = 'asc';
-      const data = _.orderBy(state.data, [field], 'asc');
-      dispatch(sortAsc(sortType, data));
+    const {
+      sortType, icon, data, clickedField,
+    } = state; // mutation or not?
+
+    if (clickedField[0] !== field) {
+      dispatch(resetSortType());
     }
-  }
-  // if (sortType[field] === '') {
-  //   const sortTypeImm = { ...sortType };
-  //   sortTypeImm[field] = 'asc';
-  //   setSortType(sortTypeImm);
-  //   const fakeCopy = _.orderBy(fake, [field], ['asc']);
-  //   setFake(fakeCopy);
-  // } else if (sortType[field] === 'asc') {
-  //   const sortTypeImm = { ...sortType };
-  //   sortTypeImm[field] = 'desc';
-  //   setSortType(sortTypeImm);
-  //   const fakeCopy = _.orderBy(fake, [field], ['desc']);
-  //   setFake(fakeCopy);
-  // } else {
-  //   const sortTypeImm = { ...sortType };
-  //   sortTypeImm[field] = '';
-  //   setSortType(sortTypeImm);
-  //   setFake(fakeData);
-  // }
-  // setClickedField([field]);
+
+    if (state.sortType[field] === '') {
+      sortType[field] = 'asc';
+      icon[field] = faArrowDown;
+      const sortedData = _.orderBy(data, [field], 'asc');
+      dispatch(sorting(sortType, icon, sortedData));
+    } else if (state.sortType[field] === 'asc') {
+      sortType[field] = 'desc';
+      icon[field] = faArrowUp;
+      const sortedData = _.orderBy(state.data, [field], 'desc');
+      dispatch(sorting(sortType, icon, sortedData));
+    } else {
+      sortType[field] = '';
+      icon[field] = faSort;
+      dispatch(sorting(sortType, icon));
+    }
+    dispatch(setClicked(field));
+  };
 }
