@@ -5,7 +5,6 @@ import {
   Container,
   Row,
 } from 'react-bootstrap';
-import { FixedSizeList as List } from 'react-window';
 import {
   makeStyles,
   lighten,
@@ -16,8 +15,9 @@ import {
   faArrowUp,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
-
-import generateFakeArray from '../../data/fakeDataGenerator';
+import { connect } from 'react-redux';
+import { sort } from '../../store/actions/datasheet';
+import { generateFakeArray } from '../../data/fakeDataGenerator';
 
 const _ = require('lodash');
 
@@ -111,68 +111,88 @@ const dataToProps = (data) => data.map((item, idx) => {
   );
 });
 
-const DataSheet = () => {
+const DataSheet = ({ sort, data }) => {
   const cl = useStyle();
-  const [sortType, setSortType] = useState({
-    currency: '',
-    amount: '',
-  });
-  const [fake, setFake] = useState(fakeData);
-  const [clickedField, setClickedField] = useState([]);
-  const useSort = (event, field) => {
-    if (event.shiftKey) {
-      if (clickedField === [] || clickedField === [field]) return; // 1 and 2
-      if (sortType[field] === '') { // 3
-        const sortTypeImm = { ...sortType };
-        sortTypeImm[field] = 'asc';
-        setSortType(sortTypeImm);
-        const fakeCopy = _.orderBy(fake, [clickedField[0], field], [sortType[clickedField[0]], 'asc']);
-        setFake(fakeCopy);
-      } else if (sortType[field] === 'asc') {
-        const sortTypeImm = { ...sortType };
-        sortTypeImm[field] = 'desc';
-        setSortType(sortTypeImm);
-        const fakeCopy = _.orderBy(fake, [clickedField[0], field], [sortType[clickedField[0]], 'desc']);
-        setFake(fakeCopy);
-      } else {
-        const sortTypeImm = { ...sortType };
-        sortTypeImm[field] = '';
-        setSortType(sortTypeImm);
-        const fakeCopy = _.orderBy(fakeData, [clickedField[0]], [sortType[clickedField[0]]]);
-        setFake(fakeCopy);
-      }
-      return;
-    }
+  // const [sortType, setSortType] = useState({
+  //   currency: '',
+  //   amount: '',
+  // });
+  // const [fake, setFake] = useState(fakeData);
+  // const [clickedField, setClickedField] = useState([]);
+  // const useSort = (event, field) => {
+  //   if (event.shiftKey) {
+  //     event.preventDefault();
+  //     if (clickedField === [] || clickedField === [field]) return; // 1 and 2
+  //     if (sortType[field] === '') { // 3
+  //       const sortTypeImm = { ...sortType };
+  //       sortTypeImm[field] = 'asc';
+  //       setSortType(sortTypeImm);
+  //       const fakeCopy = _.orderBy(fake, [clickedField[0], field], [sortType[clickedField[0]], 'asc']);
+  //       setFake(fakeCopy);
+  //     } else if (sortType[field] === 'asc') {
+  //       const sortTypeImm = { ...sortType };
+  //       sortTypeImm[field] = 'desc';
+  //       setSortType(sortTypeImm);
+  //       const fakeCopy = _.orderBy(fake, [clickedField[0], field], [sortType[clickedField[0]], 'desc']);
+  //       setFake(fakeCopy);
+  //     } else {
+  //       const sortTypeImm = { ...sortType };
+  //       sortTypeImm[field] = '';
+  //       setSortType(sortTypeImm);
+  //       const fakeCopy = _.orderBy(fakeData, [clickedField[0]], [sortType[clickedField[0]]]);
+  //       setFake(fakeCopy);
+  //     }
+  //     return;
+  //   }
+  //   // for (let key in sortType) {
+  //   //   if (key !== field) {
+  //   //     const sortTypeImm = { ...sortType };
+  //   //     sortTypeImm[key] = '';
+  //   //     setSortType(sortTypeImm);
+  //   //   }
+  //   // }
+  //   // console.log(clickedField);
+  //   // console.log([field]);
 
-    if (sortType[field] === '') {
-      const sortTypeImm = { ...sortType };
-      sortTypeImm[field] = 'asc';
-      setSortType(sortTypeImm);
-      const fakeCopy = _.orderBy(fake, [field], ['asc']);
-      setFake(fakeCopy);
-    } else if (sortType[field] === 'asc') {
-      const sortTypeImm = { ...sortType };
-      sortTypeImm[field] = 'desc';
-      setSortType(sortTypeImm);
-      const fakeCopy = _.orderBy(fake, [field], ['desc']);
-      setFake(fakeCopy);
-    } else {
-      const sortTypeImm = { ...sortType };
-      sortTypeImm[field] = '';
-      setSortType(sortTypeImm);
-      setFake(fakeData);
-    }
-    setClickedField([field]);
-  };
 
-  const sortIcon = (type) => {
-    switch (type) {
-      case '': return faSort;
-      case 'asc': return faArrowDown;
-      case 'desc': return faArrowDown;
-      default: return faSort;
-    }
-  };
+  //   if (clickedField[0] !== field) {
+
+  //     setSortType({
+  //       currency: '',
+  //       amount: '',
+  //     });
+  //   }
+
+  //   if (sortType[field] === '') {
+  //     const sortTypeImm = { ...sortType };
+  //     sortTypeImm[field] = 'asc';
+  //     setSortType(sortTypeImm);
+  //     const fakeCopy = _.orderBy(fake, [field], ['asc']);
+  //     setFake(fakeCopy);
+  //   } else if (sortType[field] === 'asc') {
+  //     const sortTypeImm = { ...sortType };
+  //     sortTypeImm[field] = 'desc';
+  //     setSortType(sortTypeImm);
+  //     const fakeCopy = _.orderBy(fake, [field], ['desc']);
+  //     setFake(fakeCopy);
+  //   } else {
+  //     const sortTypeImm = { ...sortType };
+  //     sortTypeImm[field] = '';
+  //     setSortType(sortTypeImm);
+  //     setFake(fakeData);
+  //   }
+  //   setClickedField([field]);
+  // };
+
+  // const sortIcon = (type) => {
+
+  //   switch (type) {
+  //     case '': return faSort;
+  //     case 'asc': return faArrowDown;
+  //     case 'desc': return faArrowUp;
+  //     default: return faSort;
+  //   }
+  // };
 
   return (
     <Container fluid>
@@ -202,9 +222,10 @@ const DataSheet = () => {
           <Badge
             className="button"
             variant="secondary"
-            onClick={(field) => useSort(event, field = 'currency')}
+            // onClick={(field) => useSort(event, field = 'currency')}
+            onClick={() => sort('currency')}
           >
-            <FontAwesomeIcon icon={sortIcon(sortType.currency)} />
+            <FontAwesomeIcon icon={faSort} />
           </Badge>
         </Col>
         <Col className={cl.hCell} xs={1}>
@@ -214,18 +235,180 @@ const DataSheet = () => {
           <Badge
             className="button"
             variant="secondary"
-            onClick={(field) => useSort(event, field = 'amount')}
+            // onClick={(field) => useSort(event, field = 'amount')}
           >
-            <FontAwesomeIcon icon={sortIcon(sortType.amount)} />
+            {/* <FontAwesomeIcon icon="faSort" /> */}
           </Badge>
         </Col>
         <Col className={cl.hCell} xs={1}>
           Status
         </Col>
       </Row>
-      {dataToProps(fake)}
+      {dataToProps(data)}
     </Container>
   );
 };
 
-export default DataSheet;
+function mapStateToProps(state) {
+  return {
+    sortType: state.sortType,
+    data: state.data,
+    clickedField: state.clickedField,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    sort: (field) => dispatch(sort(field)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DataSheet);
+
+// export default class DataSheet extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       sortType: {
+//         currency: '',
+//         amount: '',
+//       },
+//       fake: fakeData,
+//       clickedField: [],
+//     };
+//   }
+
+//   sort(event, field) {
+//     if (event.shiftKey) {
+//       event.preventDefault();
+//       if (this.state.clickedField === [] || this.state.clickedField === [field]) return; // 1 and 2
+//       if (this.state.sortType[field] === '') { // 3
+//         const sortTypeImm = { ...this.state.sortType };
+//         sortTypeImm[field] = 'asc';
+//         this.setState({ sortType: sortTypeImm });
+//         const fakeCopy = _.orderBy(this.state.fake, [this.state.clickedField[0], field], [this.state.sortType[this.state.clickedField[0]], 'asc']);
+//         this.setState({ fake: fakeCopy });
+//       } else if (this.state.sortType[field] === 'asc') {
+//         const sortTypeImm = { ...this.state.sortType };
+//         sortTypeImm[field] = 'desc';
+//         this.setState({ sortType: sortTypeImm });
+//         const fakeCopy = _.orderBy(this.state.fake, [this.state.clickedField[0], field], [this.state.sortType[this.state.clickedField[0]], 'desc']);
+//         this.setState({ fake: fakeCopy });
+//       } else {
+//         const sortTypeImm = { ...this.state.sortType };
+//         sortTypeImm[field] = '';
+//         this.setState({ sortType: sortTypeImm });
+//         const fakeCopy = _.orderBy(fakeData, [this.state.clickedField[0]], [this.state.sortType[this.state.clickedField[0]]]);
+//         this.setState({ fake: fakeCopy });
+//       }
+//       return;
+//     }
+//     // for (let key in sortType) {
+//     //   if (key !== field) {
+//     //     const sortTypeImm = { ...sortType };
+//     //     sortTypeImm[key] = '';
+//     //     setSortType(sortTypeImm);
+//     //   }
+//     // }
+//     // console.log(clickedField);
+//     // console.log([field]);
+
+
+//     if (this.state.clickedField[0] !== field) {
+//       this.setState({
+//         sortType: {
+//           currency: '',
+//           amount: '',
+//         },
+//       });
+//     }
+
+//     if (this.state.sortType[field] === '') {
+//       console.log(this.state.sortType);
+
+//       const sortTypeImm = { ...this.state.sortType };
+//       sortTypeImm[field] = 'asc';
+//       this.setState({ sortType: sortTypeImm });
+//       const fakeCopy = _.orderBy(this.state.fake, [field], ['asc']);
+//       this.setState({ fake: fakeCopy });
+//       console.log(this.state.sortType);
+//     } else if (this.state.sortType[field] === 'asc') {
+//       const sortTypeImm = { ...this.state.sortType };
+//       sortTypeImm[field] = 'desc';
+//       this.setState({ sortType: sortTypeImm });
+//       const fakeCopy = _.orderBy(this.state.fake, [field], ['desc']);
+//       this.setState({ fake: fakeCopy });
+//     } else {
+//       const sortTypeImm = { ...this.state.sortType };
+//       sortTypeImm[field] = '';
+//       this.setState({ sortType: sortTypeImm });
+//       this.setState({ fake: fakeData });
+//     }
+//     this.setState({ clickedField: [field] });
+//   }
+
+//   sortIcon(type) {
+//     switch (type) {
+//       case '': return faSort;
+//       case 'asc': return faArrowDown;
+//       case 'desc': return faArrowUp;
+//       default: return faSort;
+//     }
+//   }
+
+//   render() {
+//     const cl = useStyle();
+//     return (
+//       <Container fluid>
+//         <Row className={cl.header}>
+//           <Col className={`${cl.fixedColHeader} ${cl.hCell} fixedCol`} xs={2}>
+//             Name
+//             <span>
+//               <FontAwesomeIcon icon={faArrowUp} />
+//             </span>
+//           </Col>
+//           <Col className={cl.hCell} xs={1}>
+//             Gender
+//           </Col>
+//           <Col className={cl.hCell} xs={1}>
+//             Date of Birth
+//           </Col>
+//           <Col className={cl.hCell} xs={2}>
+//             Address
+//           </Col>
+//           <Col className={cl.hCell} xs={2}>
+//             Bank
+//           </Col>
+//           <Col className={cl.hCell} xs={2}>
+//             Currency
+//             &nbsp;
+//             &nbsp;
+//             <Badge
+//               className="button"
+//               variant="secondary"
+//               onClick={(field) => this.sort(event, field = 'currency')}
+//             >
+//               <FontAwesomeIcon icon={this.sortIcon(this.state.sortType.currency)} />
+//             </Badge>
+//           </Col>
+//           <Col className={cl.hCell} xs={1}>
+//             Balance
+//             &nbsp;
+//             &nbsp;
+//             <Badge
+//               className="button"
+//               variant="secondary"
+//               onClick={(field) => this.sort(event, field = 'amount')}
+//             >
+//               <FontAwesomeIcon icon={this.sortIcon(this.state.sortType.amount)} />
+//             </Badge>
+//           </Col>
+//           <Col className={cl.hCell} xs={1}>
+//             Status
+//           </Col>
+//         </Row>
+//         {dataToProps(this.state.fake)}
+//       </Container>
+//     );
+//   }
+// }

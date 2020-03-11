@@ -1,21 +1,21 @@
+import { fakeData } from '../../data/fakeDataGenerator';
+import { SORT_ASC } from '../actions/actionTypes';
+
 const initialState = {
-  counter: 100000,
+  sortType: {
+    currency: '',
+    amount: '',
+  },
+  data: fakeData,
+  clickedField: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD':
+    case SORT_ASC:
       return {
-        counter: state.counter + 1
-      };
-    case 'SUB':
-      return {
-        counter: state.counter - 1
-      };
-
-    case 'RND':
-      return {
-        counter: state.counter + action.payload
+        sortType: action.sortType,
+        data: action.data,
       };
     default:
       return state;
