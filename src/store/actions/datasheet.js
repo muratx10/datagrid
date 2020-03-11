@@ -31,24 +31,20 @@ export function resetSortType() {
 
 export function sort(field) {
   return (dispatch, getState) => {
-    const state = getState();
-    const {
-      sortType, icon, data, clickedField,
-    } = state; // mutation or not?
-
-    if (clickedField[0] !== field) {
+    if (getState().clickedField !== field) {
       dispatch(resetSortType());
     }
 
-    if (state.sortType[field] === '') {
+    const { sortType, icon, data } = getState();
+    if (getState().sortType[field] === '') {
       sortType[field] = 'asc';
       icon[field] = faArrowDown;
       const sortedData = _.orderBy(data, [field], 'asc');
       dispatch(sorting(sortType, icon, sortedData));
-    } else if (state.sortType[field] === 'asc') {
+    } else if (sortType[field] === 'asc') {
       sortType[field] = 'desc';
       icon[field] = faArrowUp;
-      const sortedData = _.orderBy(state.data, [field], 'desc');
+      const sortedData = _.orderBy(data, [field], 'desc');
       dispatch(sorting(sortType, icon, sortedData));
     } else {
       sortType[field] = '';

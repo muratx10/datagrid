@@ -13,7 +13,7 @@ const initialState = {
     amount: '',
   },
   data: fakeData,
-  clickedField: [],
+  clickedField: '',
   icon: {
     currency: faSort,
     amount: faSort,
@@ -27,18 +27,24 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         sortType: action.sortType,
         icon: action.icon,
-        data: action.data || initialState.data,
+        data: action.data || fakeData,
       };
     case SET_CLICKED:
       return {
         ...state,
-        clickedField: [action.field],
+        clickedField: action.field,
       };
     case RESET_SORT_TYPE:
       return {
         ...state,
-        sortType: initialState.sortType,
-        icon: initialState.icon,
+        sortType: {
+          currency: '',
+          amount: '',
+        },
+        icon: {
+          currency: faSort,
+          amount: faSort,
+        },
       };
     default:
       return state;
