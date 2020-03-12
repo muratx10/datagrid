@@ -54,27 +54,56 @@ export function toggleActiveUsers(isActive) {
   };
 }
 
-export function sort(field) {
+export function sort({ event, field }) {
   return (dispatch, getState) => {
+    if (event.shiftKey) {
+      event.preventDefault();
+      const {
+        sortType, icon, data, clickedField,
+      } = getState();
+      if (clickedField === '' || clickedField === field) return; // 1 and 2
+      if (sortType[field] === '') { // 3
+        sortType[field] = 'asc';
+        icon[field] = faArrowDown;
+        const sortedData = _.orderBy(data, [clickedField, field], [sortType[clickedField], 'asc']);
+        dispatch(sorting(sortType, icon, sortedData));
+      } else if (sortType[field] === 'asc') {
+        sortType[field] = 'desc';
+        icon[field] = faArrowUp;
+        const sortedData = _.orderBy(data, [clickedField, field], [sortType[clickedField], 'desc']);
+        dispatch(sorting(sortType, icon, sortedData));
+      } else {
+        sortType[field] = '';
+        icon[field] = faSort;
+        const sortedData = _.orderBy(data, [clickedField], [sortType[clickedField]]);
+        dispatch(sorting(sortType, icon, sortedData));
+      }
+      // console.log('shift');
+
+      return;
+    }
+
     if (getState().clickedField !== field) {
       dispatch(resetSortType());
     }
 
-    const { sortType, icon, data } = getState();
+    // const { sortType, icon, data } = getState();
     if (getState().sortType[field] === '') {
+      dispatch(resetSortType());
+      const { sortType, icon, data } = getState();
       sortType[field] = 'asc';
       icon[field] = faArrowDown;
       const sortedData = _.orderBy(data, [field], 'asc');
       dispatch(sorting(sortType, icon, sortedData));
-    } else if (sortType[field] === 'asc') {
+    } else if (getState().sortType[field] === 'asc') {
+      dispatch(resetSortType());
+      const { sortType, icon, data } = getState();
       sortType[field] = 'desc';
       icon[field] = faArrowUp;
       const sortedData = _.orderBy(data, [field], 'desc');
       dispatch(sorting(sortType, icon, sortedData));
     } else {
-      sortType[field] = '';
-      icon[field] = faSort;
-      dispatch(sorting(sortType, icon));
+      dispatch(resetSortType());
     }
     dispatch(setClicked(field));
   };
