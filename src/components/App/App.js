@@ -6,8 +6,9 @@ import {
 } from '@material-ui/core';
 import './App.scss';
 import DataSheet from '../DataSheet';
+import { toggleActiveUsers } from '../../store/actions/datasheet';
 
-const App = () => {
+const App = ({ toggleActiveUsers }) => {
   return (
     <>
       <Grid
@@ -17,7 +18,7 @@ const App = () => {
         alignItems="center"
       >
         <div>
-          <Switch color="primary" />
+          {/* <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} /> */}
           <Chip color="default" label="ACTIVE members only" />
         </div>
         <Typography variant="h2">
@@ -36,15 +37,13 @@ const App = () => {
 };
 
 const mapStateToProps = (state) => ({
-  counter: state.counter,
+  showActiveUsers: state.showActiveUsers,
+  data: state.data,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onAdd: () => dispatch({ type: 'ADD' }),
-  onSub: () => dispatch({ type: 'SUB' }),
-  onRnd: (n) => dispatch({ type: 'RND', payload: n }),
+  toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
 });
 
-App.propTypes = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

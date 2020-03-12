@@ -10,18 +10,8 @@ import {
   lighten,
 } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowDown,
-  faArrowUp,
-  faSort,
-} from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { sort } from '../../store/actions/datasheet';
-import { generateFakeArray } from '../../data/fakeDataGenerator';
-
-const _ = require('lodash');
-
-const fakeData = generateFakeArray(1000);
 
 const useStyle = makeStyles({
   header: {
@@ -73,8 +63,9 @@ const dataToProps = (data) => data.map((item, idx) => {
   // Fix currency name when faker.js generating name as 'Codes specifically reserved for testing purposes'
   const currency = item.currency === 'Codes specifically reserved for'
     + ' testing purposes' ? 'Euro' : item.currency;
+  const id = idx;
   return (
-    <Row className="align-items-center">
+    <Row className="align-items-center" key={id}>
       <Col className={`${cl.cell} ${cl.fixedCol} fixedCol`} xs={2}>
         <Badge variant="secondary">
           {item.id}
@@ -111,7 +102,7 @@ const dataToProps = (data) => data.map((item, idx) => {
   );
 });
 
-const DataSheet = ({ sort, data, sortType, icon }) => {
+const DataSheet = ({ sort, data, icon }) => {
   const cl = useStyle();
   // const [sortType, setSortType] = useState({
   //   currency: '',
@@ -184,23 +175,11 @@ const DataSheet = ({ sort, data, sortType, icon }) => {
   //   setClickedField([field]);
   // };
 
-  const sortIcon = (field) => {
-    switch (sortType[field]) {
-      case '': return faSort;
-      case 'asc': return faArrowDown;
-      case 'desc': return faArrowUp;
-      default: return faSort;
-    }
-  };
-
   return (
     <Container fluid>
       <Row className={cl.header}>
         <Col className={`${cl.fixedColHeader} ${cl.hCell} fixedCol`} xs={2}>
           Name
-          <span>
-            <FontAwesomeIcon icon={faArrowUp} />
-          </span>
         </Col>
         <Col className={cl.hCell} xs={1}>
           Gender
