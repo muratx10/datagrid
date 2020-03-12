@@ -3,7 +3,6 @@ import {
   faArrowUp,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
-import { fakeData } from '../../data/fakeDataGenerator';
 
 import {
   SORT,
@@ -123,6 +122,7 @@ export function sortEnum(chosenItems) {
     dispatch(resetSortType());
     if (chosenItems.length === 0) {
       const sortedData = null;
+      console.log('-------------------');
       dispatch(sortingEnum(sortedData));
       return;
     }

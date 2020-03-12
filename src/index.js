@@ -8,7 +8,13 @@ import App from './components/App';
 import DevTools from './components/reduxDevTool/reduxDevTool';
 
 // eslint-disable-next-line max-len
-const rootStore = createStore(rootReducer, compose(applyMiddleware(thunk), DevTools.instrument()));
+const logger = (store) => action => next => {
+  const result = action(next);
+  console.log('---------STATE----------');
+  console.log(store.getState());
+  return result;
+};
+const rootStore = createStore(rootReducer, compose(applyMiddleware(thunk, logger), DevTools.instrument()));
 const root = document.getElementById('root');
 
 const app = (

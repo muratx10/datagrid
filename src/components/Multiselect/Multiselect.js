@@ -5,9 +5,18 @@ import Select from 'react-select';
 import { sortEnum } from '../../store/actions/datasheet';
 // import { colourOptions } from './docs/data';
 const options = [
-  { value: 'Visa', label: 'Visa' },
-  { value: 'Mastercard', label: 'Mastercard' },
-  { value: 'Maestro', label: 'Maestro' },
+  {
+    value: 'Visa',
+    label: 'Visa',
+  },
+  {
+    value: 'Mastercard',
+    label: 'Mastercard',
+  },
+  {
+    value: 'Maestro',
+    label: 'Maestro',
+  },
 ];
 
 // function sortEnum(val) {
@@ -15,7 +24,7 @@ const options = [
 
 // }
 
-const Multiselect = ({ sortEnum }) => ( //
+const Multiselect = ({ sort }) => ( //
   <Select
     defaultValue={options}
     isMulti
@@ -23,7 +32,7 @@ const Multiselect = ({ sortEnum }) => ( //
     options={options}
     className="basic-multi-select"
     classNamePrefix="select"
-    onChange={sortEnum}
+    onChange={sort}
   />
 );
 
@@ -33,7 +42,7 @@ const Multiselect = ({ sortEnum }) => ( //
 // });
 
 const mapDispatchToProps = (dispatch) => ({
-  sortEnum: (chosenItems) => dispatch(sortEnum(chosenItems)),
+  sort: (chosenItems) => dispatch(sortEnum(chosenItems)),
 });
 
 export default connect(null, mapDispatchToProps)(Multiselect);

@@ -16,6 +16,7 @@
     "jest": true,
     "node": true
   },
+  "plugins": ["react", "react-hooks"],
   "rules": {
     "react/jsx-no-bind": [
       "error",
@@ -30,6 +31,8 @@
       "off"
     ],
     "react/no-did-update-set-state": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "react/no-unknown-property": "error",
     "react/no-unused-prop-types": "error",
     "react/prop-types": "error",
