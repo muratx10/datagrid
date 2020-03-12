@@ -3,11 +3,14 @@ import {
   faArrowUp,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
+import { fakeData } from '../../data/fakeDataGenerator';
+
 import {
   SORT,
   SET_CLICKED,
   RESET_SORT_TYPE,
   ACTIVE_USERS,
+  SORTING_ENUM,
 } from './actionTypes';
 
 const _ = require('lodash');
@@ -78,24 +81,23 @@ export function sort({ event, field }) {
         const sortedData = _.orderBy(data, [clickedField], [sortType[clickedField]]);
         dispatch(sorting(sortType, icon, sortedData));
       }
-      // console.log('shift');
 
       return;
     }
-
-    if (getState().clickedField !== field) {
+    const clicked = getState().clickedField;
+    if (clicked !== field) {
       dispatch(resetSortType());
     }
 
-    // const { sortType, icon, data } = getState();
-    if (getState().sortType[field] === '') {
+    const typeSort = getState().sortType;
+    if (typeSort[field] === '') {
       dispatch(resetSortType());
       const { sortType, icon, data } = getState();
       sortType[field] = 'asc';
       icon[field] = faArrowDown;
       const sortedData = _.orderBy(data, [field], 'asc');
       dispatch(sorting(sortType, icon, sortedData));
-    } else if (getState().sortType[field] === 'asc') {
+    } else if (typeSort[field] === 'asc') {
       dispatch(resetSortType());
       const { sortType, icon, data } = getState();
       sortType[field] = 'desc';
@@ -108,3 +110,38 @@ export function sort({ event, field }) {
     dispatch(setClicked(field));
   };
 }
+
+export function sortingEnum(data) {
+  return {
+    type: SORTING_ENUM,
+    data,
+  };
+}
+
+export function sortEnum(chosenItems) {
+  return (dispatch, getState) => {
+    dispatch(resetSortType());
+    if (chosenItems.length === 0) {
+      const sortedData = null;
+      dispatch(sortingEnum(sortedData));
+      return;
+    }
+
+    const { data } = getState();
+    // const chosenFields = chosenItems.map((obj) => obj.value);
+    const sortedData = data.filter((item) => item.card === 'Visa'); // а умный путь?
+    // const sortedData = _.filter(data, (item) => item.card === chosenFields[0] || item.card === chosenFields[1] || item.card === chosenFields[2]); // а умный путь?
+    console.log(sortedData);
+
+    dispatch(sortingEnum(sortedData));
+  };
+}
+
+// export function sortEnum(chosenItems) {
+//   return (dispatch) => {
+//     dispatch(resetSortType());
+//     const { data } = getState();
+//     const sortedData = _.filter(data, (item) => item.card === 'Visa');
+//     dispatch(sortingEnum(chosenItems));
+//   };
+// }
