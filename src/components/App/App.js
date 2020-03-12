@@ -30,7 +30,7 @@ const App = ({ toggleActiveUsers }) => (
       style={{ height: 200 }}
     >
       <div>
-        {/* <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} /> */}
+         <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} />
         <Chip color="default" label="ACTIVE members only" />
       </div>
       <Typography variant="h2">
@@ -42,20 +42,14 @@ const App = ({ toggleActiveUsers }) => (
         avatar={<Avatar>!</Avatar>}
         label=" Ctrl + H to show Redux DevTools"
       />
-      <Multiselect
-        // defaultValue={options}
-        // name="card-select"
-        // options={options}
-        // onChange={(chosenItems) => sortEnum(chosenItems)}
-      />
+      <Multiselect />
     </Grid>
     <DataSheet />
   </>
 );
 
 const mapStateToProps = (state) => ({
-  showActiveUsers: state.showActiveUsers,
-  data: state.data,
+  // showActiveUsers: state.showActiveUsers,
 });
 
 const mapDispatchToProps = (dispatch) => ({

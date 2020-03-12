@@ -1,0 +1,46 @@
+.header {
+  line-height: 40px;
+  position: sticky;
+  z-index: 99;
+  top: 0;
+  height: 40px;
+  text-transform: uppercase;
+  color: white;
+  background: lighten(#000000, 20%);
+}
+
+.active {
+  color: green;
+}
+
+.locked {
+  color: red;
+}
+
+.hCell {
+  text-align: center;
+  border-right: 1px solid gray;
+}
+
+.fixedCol {
+  position: sticky !important;
+  z-index: 9;
+  left: 0;
+  background: #FFFFFF;
+}
+
+.fixedColHeader {
+  position: sticky;
+  z-index: 99;
+  left: 0;
+  background: lighten(#000000, 20%);
+}
+
+.cell {
+  line-height: 40px;
+  overflow: hidden;
+  height: 40px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
+}
