@@ -2,7 +2,9 @@ import {
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
 import { fakeData } from '../../data/fakeDataGenerator';
-import { SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS } from '../actions/actionTypes';
+import {
+  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS,
+} from '../actions/actionTypes';
 
 const initialState = {
   sortType: {
@@ -42,6 +44,7 @@ const rootReducer = (state = initialState, action) => {
           currency: faSort,
           amount: faSort,
         },
+        data: fakeData,
       };
     case ACTIVE_USERS:
       return {

@@ -135,45 +135,6 @@ const DataSheet = ({ sort, data, icon }) => {
   //     }
   //     return;
   //   }
-  //   // for (let key in sortType) {
-  //   //   if (key !== field) {
-  //   //     const sortTypeImm = { ...sortType };
-  //   //     sortTypeImm[key] = '';
-  //   //     setSortType(sortTypeImm);
-  //   //   }
-  //   // }
-  //   // console.log(clickedField);
-  //   // console.log([field]);
-
-
-  //   if (clickedField[0] !== field) {
-
-  //     setSortType({
-  //       currency: '',
-  //       amount: '',
-  //     });
-  //   }
-
-  //   if (sortType[field] === '') {
-  //     const sortTypeImm = { ...sortType };
-  //     sortTypeImm[field] = 'asc';
-  //     setSortType(sortTypeImm);
-  //     const fakeCopy = _.orderBy(fake, [field], ['asc']);
-  //     setFake(fakeCopy);
-  //   } else if (sortType[field] === 'asc') {
-  //     const sortTypeImm = { ...sortType };
-  //     sortTypeImm[field] = 'desc';
-  //     setSortType(sortTypeImm);
-  //     const fakeCopy = _.orderBy(fake, [field], ['desc']);
-  //     setFake(fakeCopy);
-  //   } else {
-  //     const sortTypeImm = { ...sortType };
-  //     sortTypeImm[field] = '';
-  //     setSortType(sortTypeImm);
-  //     setFake(fakeData);
-  //   }
-  //   setClickedField([field]);
-  // };
 
   return (
     <Container fluid>
@@ -200,7 +161,7 @@ const DataSheet = ({ sort, data, icon }) => {
           <Badge
             className="button"
             variant="secondary"
-            onClick={() => sort('currency')}
+            onClick={() => sort({ event, field: 'currency' })}
           >
             <FontAwesomeIcon icon={icon.currency} />
           </Badge>
@@ -212,7 +173,7 @@ const DataSheet = ({ sort, data, icon }) => {
           <Badge
             className="button"
             variant="secondary"
-            onClick={() => sort('amount')}
+            onClick={() => sort({ event, field: 'amount' })}
           >
             <FontAwesomeIcon icon={icon.amount} />
           </Badge>
@@ -238,7 +199,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     sort: (field) => dispatch(sort(field)),
-    // setIcon: (field) => dispatch(setIcon(field)),
   };
 }
 
