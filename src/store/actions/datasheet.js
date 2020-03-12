@@ -3,7 +3,12 @@ import {
   faArrowUp,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
-import { SORT, SET_CLICKED, RESET_SORT_TYPE } from './actionTypes';
+import {
+  SORT,
+  SET_CLICKED,
+  RESET_SORT_TYPE,
+  ACTIVE_USERS,
+} from './actionTypes';
 
 const _ = require('lodash');
 
@@ -26,6 +31,26 @@ export function setClicked(field) {
 export function resetSortType() {
   return {
     type: RESET_SORT_TYPE,
+  };
+}
+
+export function setActiveUsers(isActive, data) {
+  return {
+    type: ACTIVE_USERS,
+    isActive,
+    data,
+  };
+}
+
+export function toggleActiveUsers(isActive) {
+  return (dispatch, getState) => {
+    const { data } = getState();
+    if (isActive) {
+      const activeUsers = _.filter(data, 'isActive');
+      dispatch(setActiveUsers(isActive, activeUsers));
+    } else {
+      dispatch(setActiveUsers(isActive, data));
+    }
   };
 }
 

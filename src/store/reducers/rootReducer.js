@@ -1,11 +1,8 @@
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  // faArrowDown,
-  // faArrowUp,
   faSort,
 } from '@fortawesome/free-solid-svg-icons';
 import { fakeData } from '../../data/fakeDataGenerator';
-import { SORT, SET_CLICKED, RESET_SORT_TYPE } from '../actions/actionTypes';
+import { SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS } from '../actions/actionTypes';
 
 const initialState = {
   sortType: {
@@ -45,6 +42,12 @@ const rootReducer = (state = initialState, action) => {
           currency: faSort,
           amount: faSort,
         },
+      };
+    case ACTIVE_USERS:
+      return {
+        ...state,
+        showActiveUsers: action.isActive,
+        data: action.data,
       };
     default:
       return state;
