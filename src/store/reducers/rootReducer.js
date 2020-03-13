@@ -50,7 +50,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         showActiveUsers: action.isActive,
-        data: action.data,
+        data: action.data || fakeData,
       };
     case SORTING_ENUM:
       return {
