@@ -51,7 +51,7 @@ export function toggleActiveUsers(isActive) {
       const activeUsers = _.filter(data, 'isActive');
       dispatch(setActiveUsers(isActive, activeUsers));
     } else {
-      dispatch(setActiveUsers(isActive, data));
+      dispatch(setActiveUsers(isActive));
     }
   };
 }

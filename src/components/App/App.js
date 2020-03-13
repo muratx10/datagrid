@@ -8,17 +8,6 @@ import './App.scss';
 import Multiselect from '../Multiselect/Multiselect';
 import DataSheet from '../DataSheet';
 import { toggleActiveUsers } from '../../store/actions/datasheet';
-// import { sortEnum } from '../../store/actions/datasheet';
-
-// const options = [
-//   { value: 'Visa', label: 'Visa' },
-//   { value: 'Mastercard', label: 'Mastercard' },
-//   { value: 'Maestro', label: 'Maestro' },
-// ];
-
-// function sortEnum(value) {
-//   console.log(value);
-// }
 
 const App = ({ toggleActiveUsers }) => (
   <>
@@ -27,10 +16,10 @@ const App = ({ toggleActiveUsers }) => (
       direction="row"
       justify="space-around"
       alignItems="center"
-      style={{ height: 200 }}
+      style={{ height: 100 }}
     >
       <div>
-         <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} />
+        <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} />
         <Chip color="default" label="ACTIVE members only" />
       </div>
       <Typography variant="h2">
@@ -48,14 +37,9 @@ const App = ({ toggleActiveUsers }) => (
   </>
 );
 
-const mapStateToProps = (state) => ({
-  // showActiveUsers: state.showActiveUsers,
-});
-
 const mapDispatchToProps = (dispatch) => ({
   toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
-  // sortEnum: (chosenItems) => dispatch(sortEnum(chosenItems)),
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
