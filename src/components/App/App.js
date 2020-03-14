@@ -16,7 +16,9 @@ const App = ({ toggleActiveUsers }) => (
       direction="row"
       justify="space-around"
       alignItems="center"
-      style={{ height: 100 }}
+      style={{
+        padding: '10px',
+      }}
     >
       <div>
         <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} />
