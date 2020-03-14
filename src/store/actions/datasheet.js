@@ -121,16 +121,16 @@ export function sortEnum(chosenItems) {
   return (dispatch, getState) => {
     dispatch(resetSortType());
     if (chosenItems.length === 0) {
-      const sortedData = null;
+      const sortedData = [];
       console.log('-------------------');
       dispatch(sortingEnum(sortedData));
       return;
     }
 
     const { data } = getState();
-    // const chosenFields = chosenItems.map((obj) => obj.value);
-    const sortedData = data.filter((item) => item.card === 'Visa'); // а умный путь?
-    // const sortedData = _.filter(data, (item) => item.card === chosenFields[0] || item.card === chosenFields[1] || item.card === chosenFields[2]); // а умный путь?
+    const chosenFields = chosenItems.map((obj) => obj.value);
+    // const sortedData = data.filter((item) => item.card === 'Visa'); // а умный путь?
+    const sortedData = _.filter(data, (item) => item.card === chosenFields[0] || item.card === chosenFields[1] || item.card === chosenFields[2]); // а умный путь?
     console.log(sortedData);
 
     dispatch(sortingEnum(sortedData));
