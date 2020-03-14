@@ -33,6 +33,13 @@ const Multiselect = ({ sort }) => ( //
     className="basic-multi-select"
     classNamePrefix="select"
     onChange={sort}
+    styles={{
+      menu: (provided) => ({ ...provided, zIndex: 9999 }),
+      container: () => ({
+        minWidth: 250,
+        position: 'relative',
+      }),
+    }}
   />
 );
 

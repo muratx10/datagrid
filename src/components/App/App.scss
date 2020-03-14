@@ -19,7 +19,8 @@ td, th {
 
 
 .container-fluid {
-  width: 1700px !important;
+  min-width: 1700px !important;
+  width: 100vw;
   max-width: none !important;
 
   .fixedCol {
@@ -52,6 +53,7 @@ td, th {
     }
   }
 }
+
 
 
 
