@@ -9,28 +9,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { sort } from '../../store/actions/datasheet';
 import './DataSheet.scss';
+import { Checkbox } from '@material-ui/core';
 
 const RowComponent = ({
   id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive,
 }) => {
   const [activeRow, setActiveRow] = useState(false);
 
-  const style = { backgroundColor: 'gray' };
+  const style = { backgroundColor: 'lightgray' };
 
   return (
-    <Row className="align-items-center" key={id} style={activeRow ? style : null} id={id}>
+    <Row className="align-items-center row-item" key={id} style={activeRow ? style : null} id={id}>
       <Col className="cell fixedCol fixedCol" xs={2}>
+        <Checkbox
+          name={name}
+          id={id}
+          color="secondary"
+          onChange={() => setActiveRow(!activeRow)} />
         <Badge variant="secondary">
           {id}
         </Badge>
         &nbsp;
         {name}
-        <input
-          type="checkbox"
-          name={name}
-          id={id}
-          onChange={() => setActiveRow(!activeRow)}
-        />
       </Col>
       <Col xs={1} className="cell">
         {gender ? 'male' : 'female'}

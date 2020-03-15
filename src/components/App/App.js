@@ -8,6 +8,7 @@ import './App.scss';
 import Multiselect from '../Multiselect/Multiselect';
 import DataSheet from '../DataSheet';
 import { toggleActiveUsers } from '../../store/actions/datasheet';
+import SearchField from '../Search';
 
 const App = ({ toggleActiveUsers }) => (
   <>
@@ -18,6 +19,8 @@ const App = ({ toggleActiveUsers }) => (
       alignItems="center"
       style={{
         padding: '10px',
+        display: 'flex',
+        overflow: 'auto',
       }}
     >
       <div>
@@ -34,8 +37,11 @@ const App = ({ toggleActiveUsers }) => (
         label=" Ctrl + H to show Redux DevTools"
       />
       <Multiselect />
+      <Grid item xs={12} sm={6} style={{ margin: '20px 0' }}>
+        <SearchField />
+      </Grid>
     </Grid>
-    <DataSheet />
+    <DataSheet style={{ overflowX: 'scroll' }} />
   </>
 );
 
