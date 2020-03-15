@@ -6,17 +6,19 @@ import {
   Row,
 } from 'react-bootstrap';
 import { Checkbox } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
-import setActiveRowId from '../../store/actions/rowcomponent';
+import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
 
 const RowComponent = ({
-  id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive, setActiveRowId,
+  id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive, setActiveRows, setDeletedRows,
 }) => {
   const [activeRow, setActiveRow] = useState(false);
   const style = activeRow ? { backgroundColor: 'lightgray' } : null;
   const chooseRow = (event) => {
     setActiveRow(!activeRow);
-    setActiveRowId(event.target.id);
+    setActiveRows(event.target.id);
   };
 
   return (
@@ -27,6 +29,9 @@ const RowComponent = ({
           color="primary"
           onChange={chooseRow}
         />
+        <IconButton aria-label="delete" onClick={() => setDeletedRows(id)}>
+          <DeleteIcon />
+        </IconButton>
         <Badge variant="secondary">
           {id}
         </Badge>
@@ -73,7 +78,8 @@ const RowComponent = ({
 
 function mapDispatchToProps(dispatch) {
   return {
-    setActiveRowId: (id) => dispatch(setActiveRowId(id)),
+    setActiveRows: (id) => dispatch(setActiveRowId(id)),
+    setDeletedRows: (id) => dispatch(deleteRow(id)),
   };
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Badge,
   Col,
@@ -9,8 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { sort } from '../../store/actions/datasheet';
 import './DataSheet.scss';
-import { Checkbox } from '@material-ui/core';
 import RowComponent from '../RowComponent/RowComponent';
+import rowsSelector from '../../store/selectors/selector';
 
 const dataToProps = (data) => data.map((item, idx) => {
   const statusColor = item.isActive ? 'active' : 'locked';
@@ -41,7 +41,7 @@ const dataToProps = (data) => data.map((item, idx) => {
 });
 
 const DataSheet = ({
-  sort, data, icon1, icon2,
+  sorting, data, icon1, icon2,
 }) => (
   <Container fluid>
     <Row className="header">
@@ -67,7 +67,7 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sort({ event, field: 'currency' })}
+          onClick={() => sorting({ event, field: 'currency' })}
         >
           <FontAwesomeIcon icon={icon1} />
         </Badge>
@@ -79,7 +79,7 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sort({ event, field: 'amount' })}
+          onClick={() => sorting({ event, field: 'amount' })}
         >
           <FontAwesomeIcon icon={icon2} />
         </Badge>
@@ -96,11 +96,10 @@ const DataSheet = ({
 );
 
 
-
 function mapStateToProps(state) {
   return {
     sortType: state.sortType,
-    data: state.data,
+    data: rowsSelector(state),
     clickedField: state.clickedField,
     icon1: state.icon.currency,
     icon2: state.icon.amount,
@@ -109,7 +108,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    sort: (field) => dispatch(sort(field)),
+    sorting: (field) => dispatch(sort(field)),
   };
 }
 

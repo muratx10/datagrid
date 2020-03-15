@@ -1,7 +1,8 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
+import { connect } from 'react-redux';
 
-const SearchField = () => (
+const SearchField = ({ onSearchChange }) => (
   <form noValidate autoComplete="off">
     <TextField
       label="Search"
@@ -9,9 +10,15 @@ const SearchField = () => (
       color="primary"
       size="small"
       fullWidth
-      onChange={(e) => console.log(e.target.value)}
+      onChange={(event) => onSearchChange(event.target.value)}
     />
   </form>
 );
 
-export default SearchField;
+function mapDispatchToProps(dispatch) {
+  return {
+    onSearchChange: (search) => dispatch({ type: 'TABLE_SEARCH', payload: search }),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(SearchField);
