@@ -3,7 +3,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { fakeData } from '../../data/fakeDataGenerator';
 import {
-  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM,
+  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM, SEARCH,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -53,6 +53,11 @@ const rootReducer = (state = initialState, action) => {
         data: action.data || fakeData,
       };
     case SORTING_ENUM:
+      return {
+        ...state,
+        data: action.data,
+      };
+    case SEARCH:
       return {
         ...state,
         data: action.data,
