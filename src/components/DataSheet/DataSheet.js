@@ -12,62 +12,6 @@ import './DataSheet.scss';
 import { Checkbox } from '@material-ui/core';
 import RowComponent from '../RowComponent/RowComponent';
 
-// const RowComponent = ({
-//   id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive,
-// }) => {
-//   const [activeRow, setActiveRow] = useState(false);
-//   const style = activeRow ? { backgroundColor: 'lightgray' } : null;
-//   const chooseRow = (event) => {
-//     setActiveRow(!activeRow);
-//     console.log(event.target.id);
-//   }
-
-//   return (
-//     <Row className="align-items-center row-item" id={id}>
-//       <Col className="cell fixedCol fixedCol" xs={2} style={style}>
-//         <Checkbox
-//           id={id}
-//           color="primary"
-//           onChange={chooseRow}
-//         />
-//         <Badge variant="secondary">
-//           {id}
-//         </Badge>
-//         &nbsp;
-//         {name}
-//       </Col>
-//       <Col xs={1} className="cell" style={style}>
-//         {gender ? 'male' : 'female'}
-//       </Col>
-//       <Col xs={1} className="cell" style={style}>
-//         {birthDate}
-//       </Col>
-//       <Col xs={2} className="cell" style={style}>
-//         {city}
-//         &nbsp;
-//         {zipcode}
-//       </Col>
-//       <Col xs={1} className="cell" style={style}>
-//         {bankName}
-//       </Col>
-//       <Col xs={2} className="cell" style={style}>
-//         {currency}
-//       </Col>
-//       <Col xs={1} className="cell text-right" style={style}>
-//         {amount}
-//       </Col>
-//       <Col xs={1} className="cell" style={style}>
-//         {card}
-//       </Col>
-//       <Col className={`${statusColor} cell text-center`} xs={1} style={style}>
-//         <Badge variant={statusBadge}>
-//           {isActive ? 'active' : 'locked'}
-//         </Badge>
-//       </Col>
-//     </Row>
-//   );
-// };
-
 const dataToProps = (data) => data.map((item, idx) => {
   const statusColor = item.isActive ? 'active' : 'locked';
   const statusBadge = item.isActive ? 'success' : 'danger';
