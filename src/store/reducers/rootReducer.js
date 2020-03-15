@@ -61,6 +61,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
+        searchText: action.searchText,
       };
     default:
       return state;

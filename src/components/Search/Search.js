@@ -1,7 +1,10 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
+// import { connect } from 'react-redux';
+// import { searchData } from '../../store/selector';
 
-const SearchField = () => (
+
+const SearchField = ({ onSearch }) => (
   <form noValidate autoComplete="off">
     <TextField
       label="Search"
@@ -9,7 +12,7 @@ const SearchField = () => (
       color="primary"
       size="small"
       fullWidth
-      onChange={(e) => console.log(e.target.value)}
+      onChange={onSearch}
     />
   </form>
 );

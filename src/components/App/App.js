@@ -38,12 +38,14 @@ const App = ({ toggleActiveUsers }) => (
       />
       <Multiselect />
       <Grid item xs={12} sm={6} style={{ margin: '20px 0' }}>
-        <SearchField />
+        <SearchField onSearch={(e) => console.log(e.target.value)} />
       </Grid>
     </Grid>
     <DataSheet style={{ overflowX: 'scroll' }} />
   </>
 );
+
+// const mapStateToProps = (state) => ({  })
 
 const mapDispatchToProps = (dispatch) => ({
   toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
