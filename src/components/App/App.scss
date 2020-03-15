@@ -52,11 +52,14 @@ td, th {
     }
   }
 }
+
 .row-item {
   transition: 200ms;
+  background: white;
 
-  &:hover {
-    background: lighten(lightgray, 5%);
+  &:hover,
+  &:hover .fixedCol{
+    background: lightgray;
   }
 }
 
