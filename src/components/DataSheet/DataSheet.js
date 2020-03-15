@@ -22,10 +22,9 @@ const RowComponent = ({
     <Row className="align-items-center row-item" key={id} style={activeRow ? style : null} id={id}>
       <Col className="cell fixedCol fixedCol" xs={2}>
         <Checkbox
-          name={name}
-          id={id}
-          color="secondary"
-          onChange={() => setActiveRow(!activeRow)} />
+          color="primary"
+          onChange={() => setActiveRow(!activeRow)}
+        />
         <Badge variant="secondary">
           {id}
         </Badge>
