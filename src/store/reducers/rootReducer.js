@@ -77,7 +77,7 @@ const rootReducer = (state = initialState, action) => {
     case SET_DELETED:
       return {
         ...state,
-        deletedRows: action.deletedRows,
+        deletedRows: [...state.deletedRows, action.payload],
       };
     default:
       return state;

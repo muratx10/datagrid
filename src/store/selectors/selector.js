@@ -39,46 +39,44 @@ import { createSelector } from 'reselect';
 //   // }
 // };
 
-// const showRows = (data, deletedRows) => {
-//   console.log('inside selector');
+const showRows = (data, deletedRows) => {
+  console.log('inside selector');
 
-//   if (deletedRows.length === 0) return data;
-//   return data.filter((row) => {
-//     console.log(row.id);
-//     return true;
-//   });
-// };
-
-// const rowsSelector = createSelector(
-//   (state) => state.data,
-//   (state) => state.deletedRows,
-//   (data, deletedRows) => showRows(data, deletedRows)
-// );
-const searchItem = (data, searchText) => {
-  if (!searchText) return data;
-
-  try {
-    const searchRegex = new RegExp(searchText, 'i');
-    return data.filter((row) => [
-      row.name,
-      row.birthDate,
-      row.amount,
-      row.bankName,
-      row.currency,
-      row.gender,
-      row.card,
-      row.locationName.city,
-      row.locationName.zipcode,
-    ].find((str) => searchRegex.test(str)));
-  } catch (e) {
-    return data;
-  }
+  if (deletedRows.length === 0) return data;
+  return data.filter((row) => !deletedRows.includes(row.id));
 };
 
 const rowsSelector = createSelector(
   (state) => state.data,
-  (state) => state.search,
-  (data, search) => searchItem(data, search)
+  (state) => state.deletedRows,
+  (data, deletedRows) => showRows(data, deletedRows)
 );
+// const searchItem = (data, searchText) => {
+
+//   if (!searchText) return data;
+
+//   try {
+//     const searchRegex = new RegExp(searchText, 'i');
+//     return data.filter((row) => [
+//       row.name,
+//       row.birthDate,
+//       row.amount,
+//       row.bankName,
+//       row.currency,
+//       row.gender,
+//       row.card,
+//       row.locationName.city,
+//       row.locationName.zipcode,
+//     ].find((str) => searchRegex.test(str)));
+//   } catch (e) {
+//     return data;
+//   }
+// };
+
+// const rowsSelector = createSelector(
+//   (state) => state.data,
+//   (state) => state.search,
+//   (data, search) => searchItem(data, search)
+// );
 
 export default rowsSelector;
