@@ -54,6 +54,10 @@ td, th {
 }
 .row-item {
   transition: 200ms;
+
+  &:hover {
+    background: lighten(lightgray, 5%);
+  }
 }
 
 
