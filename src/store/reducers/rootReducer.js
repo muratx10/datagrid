@@ -44,7 +44,7 @@ const rootReducer = (state = initialState, action) => {
           currency: faSort,
           amount: faSort,
         },
-        data: fakeData,
+        // data: fakeData,
       };
     case ACTIVE_USERS:
       return {
