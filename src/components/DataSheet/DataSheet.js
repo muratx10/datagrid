@@ -15,12 +15,11 @@ const RowComponent = ({
   id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive,
 }) => {
   const [activeRow, setActiveRow] = useState(false);
-
-  const style = { backgroundColor: 'lightgray' };
+  const style = activeRow ? { backgroundColor: 'lightgray' } : null;
 
   return (
-    <Row className="align-items-center row-item" key={id} style={activeRow ? style : null} id={id}>
-      <Col className="cell fixedCol fixedCol" xs={2}>
+    <Row className="align-items-center row-item" key={id} id={id}>
+      <Col className="cell fixedCol fixedCol" xs={2} style={style}>
         <Checkbox
           color="primary"
           onChange={() => setActiveRow(!activeRow)}
@@ -31,30 +30,30 @@ const RowComponent = ({
         &nbsp;
         {name}
       </Col>
-      <Col xs={1} className="cell">
+      <Col xs={1} className="cell" style={style}>
         {gender ? 'male' : 'female'}
       </Col>
-      <Col xs={1} className="cell">
+      <Col xs={1} className="cell" style={style}>
         {birthDate}
       </Col>
-      <Col xs={2} className="cell">
+      <Col xs={2} className="cell" style={style}>
         {city}
         &nbsp;
         {zipcode}
       </Col>
-      <Col xs={1} className="cell">
+      <Col xs={1} className="cell" style={style}>
         {bankName}
       </Col>
-      <Col xs={2} className="cell">
+      <Col xs={2} className="cell" style={style}>
         {currency}
       </Col>
-      <Col xs={1} className="cell text-right">
+      <Col xs={1} className="cell text-right" style={style}>
         {amount}
       </Col>
-      <Col xs={1} className="cell">
+      <Col xs={1} className="cell" style={style}>
         {card}
       </Col>
-      <Col className={`${statusColor} cell text-center`} xs={1}>
+      <Col className={`${statusColor} cell text-center`} xs={1} style={style}>
         <Badge variant={statusBadge}>
           {isActive ? 'active' : 'locked'}
         </Badge>
