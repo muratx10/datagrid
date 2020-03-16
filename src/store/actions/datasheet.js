@@ -10,9 +10,19 @@ import {
   RESET_SORT_TYPE,
   ACTIVE_USERS,
   SORTING_ENUM,
+  FILTER,
 } from './actionTypes';
 
 const _ = require('lodash');
+
+
+export function setFiltered(data, filterText) {
+  return {
+    type: FILTER,
+    data,
+    filterText,
+  };
+}
 
 export function sorting(sortType, icon, data) {
   return {

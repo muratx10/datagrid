@@ -25,4 +25,4 @@ const generateFakeData = (id) => ({
 export const generateFakeArray = (recordsCount) => [...new Array(recordsCount)]
   .map((_, index) => generateFakeData(1 + index));
 
-export const fakeData = generateFakeArray(100);
+export const fakeData = generateFakeArray(2000);

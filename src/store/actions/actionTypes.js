@@ -4,6 +4,6 @@ export const RESET_SORT_TYPE = 'RESET_SORT_TYPE';
 export const ACTIVE_USERS = 'ACTIVE_USERS';
 export const SORT_ENUM = 'SORT_ENUM';
 export const SORTING_ENUM = 'SORTING_ENUM';
-export const SEARCH = 'SEARCH';
+export const FILTER = 'FILTER';
 export const SET_ACTIVE = 'SET_ACTIVE';
 export const SET_DELETED = 'SET_DELETED';
