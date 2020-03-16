@@ -6,3 +6,4 @@ export const SORT_ENUM = 'SORT_ENUM';
 export const SORTING_ENUM = 'SORTING_ENUM';
 export const FILTER = 'FILTER';
 export const SET_ACTIVE = 'SET_ACTIVE';
+export const SET_DELETED = 'SET_DELETED';
