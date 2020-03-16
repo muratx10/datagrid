@@ -9,8 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { sort } from '../../store/actions/datasheet';
 import './DataSheet.scss';
-import { Checkbox } from '@material-ui/core';
 import RowComponent from '../RowComponent/RowComponent';
+import { filterData } from '../../store/selector';
 
 // const RowComponent = ({
 //   id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive,
@@ -68,13 +68,11 @@ import RowComponent from '../RowComponent/RowComponent';
 //   );
 // };
 
-const dataToProps = (data) => data.map((item, idx) => {
+const dataToProps = (data) => data.map((item) => {
   const statusColor = item.isActive ? 'active' : 'locked';
   const statusBadge = item.isActive ? 'success' : 'danger';
-  // Fix currency name when faker.js generating name as 'Codes specifically reserved for testing purposes'
   const currency = item.currency === 'Codes specifically reserved for'
     + ' testing purposes' ? 'Euro' : item.currency;
-  const id = idx;
 
   return (
     <RowComponent
@@ -151,13 +149,10 @@ const DataSheet = ({
   </Container>
 );
 
-
-
 function mapStateToProps(state) {
   return {
     sortType: state.sortType,
     data: state.data,
-    clickedField: state.clickedField,
     icon1: state.icon.currency,
     icon2: state.icon.amount,
   };

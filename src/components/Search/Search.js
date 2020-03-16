@@ -1,10 +1,10 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-// import { connect } from 'react-redux';
-// import { searchData } from '../../store/selector';
+import { connect } from 'react-redux';
+import { filterData } from '../../store/selector';
 
 
-const SearchField = ({ onSearch }) => (
+const SearchField = ({ search }) => (
   <form noValidate autoComplete="off">
     <TextField
       label="Search"
@@ -12,9 +12,13 @@ const SearchField = ({ onSearch }) => (
       color="primary"
       size="small"
       fullWidth
-      onChange={onSearch}
+      onChange={(e) => search(e.target.value)}
     />
   </form>
 );
 
-export default SearchField;
+const mapDispatchToProps = (dispatch) => (
+  { search: (text) => dispatch(filterData(text)) }
+);
+
+export default connect(null, mapDispatchToProps)(SearchField);

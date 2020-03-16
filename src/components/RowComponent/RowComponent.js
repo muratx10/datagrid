@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import t from 'prop-types';
 import { connect } from 'react-redux';
 import {
   Badge,
@@ -64,6 +65,7 @@ const RowComponent = ({
     </Row>
   );
 };
+
 
 // function mapStateToProps(state) {
 //   return {
