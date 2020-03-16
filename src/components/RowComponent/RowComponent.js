@@ -11,60 +11,66 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
+import { fakeData } from '../../data/fakeDataGenerator';
 
 const RowComponent = ({
-  id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive, setActiveRows, setDeletedRows,
+  id,
+  setActiveRows,
+  setDeletedRows,
+  data,
+  index,
+  style
 }) => {
   const [activeRow, setActiveRow] = useState(false);
-  const style = activeRow ? { backgroundColor: 'lightgray' } : null;
+  const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
   const chooseRow = (event) => {
     setActiveRow(!activeRow);
     setActiveRows(event.target.id);
   };
-
+  const idx = toString(data[index].id);
   return (
-    <Row className="align-items-center row-item" id={id}>
-      <Col className="cell fixedCol fixedCol" xs={2} style={style}>
+    <Row className="align-items-center row-item" id={data[index].id} style={style}>
+      <Col className="cell fixedCol fixedCol" xs={2} style={isActiveStyle}>
         <Checkbox
-          id={id}
+          id={idx}
           color="primary"
           onChange={chooseRow}
         />
-        <IconButton aria-label="delete" onClick={() => setDeletedRows(id)}>
+        <IconButton aria-label="delete" onClick={() => setDeletedRows(data[index].id)}>
           <DeleteIcon />
         </IconButton>
         <Badge variant="secondary">
-          {id}
+          {data[index].id}
         </Badge>
         &nbsp;
-        {name}
+        {data[index].name}
       </Col>
-      <Col xs={1} className="cell" style={style}>
-        {gender ? 'male' : 'female'}
+      <Col xs={1} className="cell" style={isActiveStyle}>
+        {data[index].gender ? 'male' : 'female'}
       </Col>
-      <Col xs={1} className="cell" style={style}>
-        {birthDate}
+      <Col xs={1} className="cell" style={isActiveStyle}>
+        {data[index].birthDate}
       </Col>
-      <Col xs={2} className="cell" style={style}>
-        {city}
+      <Col xs={2} className="cell" style={isActiveStyle}>
+        {data[index].locationName.city}
         &nbsp;
-        {zipcode}
+        {data[index].locationName.zipcode}
       </Col>
-      <Col xs={1} className="cell" style={style}>
-        {bankName}
+      <Col xs={1} className="cell" style={isActiveStyle}>
+        {data[index].bankName}
       </Col>
-      <Col xs={2} className="cell" style={style}>
-        {currency}
+      <Col xs={2} className="cell" style={isActiveStyle}>
+        {data[index].currency}
       </Col>
-      <Col xs={1} className="cell text-right" style={style}>
-        {amount}
+      <Col xs={1} className="cell text-right" style={isActiveStyle}>
+        {data[index].amount}
       </Col>
-      <Col xs={1} className="cell" style={style}>
-        {card}
+      <Col xs={1} className="cell" style={isActiveStyle}>
+        {data[index].card}
       </Col>
-      <Col className={`${statusColor} cell text-center`} xs={1} style={style}>
-        <Badge variant={statusBadge}>
-          {isActive ? 'active' : 'locked'}
+      <Col className="cell text-center" xs={1} style={isActiveStyle}>
+        <Badge variant={data[index].isActive ? 'success' : 'danger'}>
+          {data[index].isActive ? 'active' : 'locked'}
         </Badge>
       </Col>
     </Row>
