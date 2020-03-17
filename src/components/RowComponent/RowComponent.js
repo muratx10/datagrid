@@ -24,24 +24,33 @@ const RowComponent = ({
 }) => {
   const [activeRow, setActiveRow] = useState(false);
   const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
-  const chooseRow = (event) => {
+
+  console.log(`key: ${key}`);
+  const idx = (data[index].id).toString();
+  const chooseRow = () => {
+    console.log('eventID', idx);
+
     setActiveRow(!activeRow);
-    setActiveRows(event.target.id);
+    setActiveRows(data[index].id);
   };
-  const idx = toString(data[index].id);
   const currency = data[index].currency === 'Codes specifically reserved for'
   + ' testing purposes' ? 'Euro' : data[index].currency;
   return (
-    <Row className="align-items-center row-item" id={data[index].id}
-         style={style} key={key}>
+    <Row
+      className="align-items-center row-item"
+      id={data[index].id}
+      style={style}
+      key={key}
+    >
       <Col className="cell fixedCol fixedCol" xs={2} style={isActiveStyle}>
         <Checkbox
           id={idx}
           color="primary"
           onChange={chooseRow}
         />
-        <IconButton aria-label="delete"
-                    onClick={() => setDeletedRows(data[index].id)}
+        <IconButton
+          aria-label="delete"
+          onClick={() => setDeletedRows(data[index].id)}
         >
           <DeleteIcon />
         </IconButton>
