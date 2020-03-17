@@ -8,7 +8,7 @@ import './App.scss';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ExportToCsv } from 'export-to-csv';
-import Multiselect from '../Multiselect/MultiSelect';
+import MultiSelect from '../MultiSelect/MultiSelect';
 import DataSheet from '../DataSheet';
 import {
   setTurboMode,
@@ -16,6 +16,7 @@ import {
 } from '../../store/actions/datasheet';
 import SearchField from '../Search';
 import { deleteSelectedRows, setInvisibleColumn } from '../../store/actions/app';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const exportCSV = (obj) => {
   const options = {
@@ -36,7 +37,14 @@ const exportCSV = (obj) => {
 };
 
 const App = ({
-  toggleActive, deleteRows, data, hideColumn, invisibleColumns, setTurboMode, showActiveOnly,
+  toggleActive,
+  deleteRows,
+  data,
+  hideColumn,
+  invisibleColumns,
+  setTurboMode,
+  showActiveOnly,
+  turboMode,
 }) => (
   <>
     <Grid
@@ -66,22 +74,18 @@ const App = ({
           <div>
             <Switch
               color="primary"
+              checked={!!turboMode}
               onChange={(e) => setTurboMode(e.target.checked)}
             />
             <Chip color="default" label="TURBO mode ON" />
           </div>
         </Grid>
       </div>
-      <Typography variant="h2">
-        Data Grid
-      </Typography>
-      <Chip
-        className="ml-5"
-        color="default"
-        avatar={<Avatar>!</Avatar>}
-        label=" Ctrl + H to show Redux DevTools"
-      />
-      <Multiselect />
+      <Tooltip title="CTRL+H to show Redux DevTools">
+        <Typography variant="h2" style={{ cursor: 'help' }}>
+          Data Grid
+        </Typography>
+      </Tooltip>
       <FormControlLabel
         control={(
           <Checkbox
@@ -108,11 +112,34 @@ const App = ({
         <DeleteIcon />
       </IconButton>
       <button onClick={() => exportCSV(data)}>Export</button>
-      <Grid item xs={12} sm={6} style={{ margin: '20px 0' }}>
-        <SearchField />
+      <Grid
+        container
+        direction="row"
+        item
+        spacing={2}
+        xs={12}
+        sm={6}
+        style={{ margin: '20px 0' }}
+      >
+        <Grid item xs={8}>
+          <SearchField />
+        </Grid>
+        <Grid item xs={4}>
+          <MultiSelect />
+        </Grid>
       </Grid>
     </Grid>
-    <DataSheet style={{ overflowX: 'scroll' }} />
+    <div style={{
+      width: '90vw',
+      height: '75vh',
+      overflow: 'scroll',
+      margin: '0 auto',
+      borderRadius: '5px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+    }}
+    >
+      <DataSheet style={{ overflowX: 'scroll' }} />
+    </div>
   </>
 );
 
@@ -120,6 +147,7 @@ const mapStateToProps = (state) => ({
   data: state.data,
   invisibleColumns: state.invisibleColumns,
   showActiveOnly: state.showActiveOnly,
+  turboMode: state.isTurboModeOn,
 });
 
 const mapDispatchToProps = (dispatch) => ({
