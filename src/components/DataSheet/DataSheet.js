@@ -1,5 +1,6 @@
 import React from 'react';
 import { FixedSizeList as List } from 'react-window';
+import _ from 'lodash';
 import {
   Badge,
   Col,
@@ -43,7 +44,8 @@ import rowsSelector from '../../store/selectors/selector';
 
 const DataSheet = ({
   sorting, data, icon1, icon2,
-}) => (
+}) => {
+  return (
     <Container fluid>
       <Row className="header">
         <Col className="fixedColHeader hCell fixedCol" xs={2}>
@@ -98,11 +100,13 @@ const DataSheet = ({
         itemSize={40}
         itemCount={data.length}
         itemData={data}
+        itemKey={_.uniqueId}
       >
         {RowComponent}
       </List>
     </Container>
   );
+};
 
 
 function mapStateToProps(state) {

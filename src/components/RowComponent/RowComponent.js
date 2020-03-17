@@ -14,12 +14,12 @@ import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
 import { fakeData } from '../../data/fakeDataGenerator';
 
 const RowComponent = ({
-  id,
   setActiveRows,
   setDeletedRows,
   data,
   index,
-  style
+  style,
+  key
 }) => {
   const [activeRow, setActiveRow] = useState(false);
   const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
@@ -27,9 +27,10 @@ const RowComponent = ({
     setActiveRow(!activeRow);
     setActiveRows(event.target.id);
   };
+  console.log('key: ' + key);
   const idx = toString(data[index].id);
   return (
-    <Row className="align-items-center row-item" id={data[index].id} style={style}>
+    <Row className="align-items-center row-item" id={data[index].id} style={style} key={key}>
       <Col className="cell fixedCol fixedCol" xs={2} style={isActiveStyle}>
         <Checkbox
           id={idx}
