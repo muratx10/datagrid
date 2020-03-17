@@ -16,10 +16,6 @@ import {
   SEARCH,
 } from '../actions/actionTypes';
 
-// let initialState = {};
-// if (localStorage.getItem('reduxState') !== null) {
-//   initialState = localStorage.getItem('reduxState');
-// } else {
 const initialState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {
@@ -38,11 +34,9 @@ const initialState = localStorage.getItem('reduxState')
     deletedRows: [],
     invisibleColumns: [],
     invisibleCards: [],
-    // 'Name', 'Gender', 'Date of Birth', 'Address', 'Bank', 'Currency', 'Balance', 'Card', 'Status',
     search: '',
     turboMode: true,
   };
-// }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INVISIBLE:
@@ -56,7 +50,7 @@ const rootReducer = (state = initialState, action) => {
         deletedRows: [...state.deletedRows, ...state.activeRows],
         activeRows: [],
       };
-    case 'TABLE_SEARCH':
+    case SEARCH:
       return { ...state, search: action.payload };
     case SORT:
       return {
@@ -98,11 +92,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         invisibleCards: [...action.payload],
       };
-    // case SEARCH:
-    //   return {
-    //     ...state,
-    //     data: action.data,
-    //   };
     case SET_ACTIVE:
       return {
         ...state,
