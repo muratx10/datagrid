@@ -39,7 +39,7 @@ import { createSelector } from 'reselect';
 //   // }
 // };
 
-const filtersAndSort = (data, deletedRows, showActiveOnly) => {
+const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards) => {
   console.log('inside selector');
 
   if (deletedRows.length === 0 && localStorage.getItem('reduxState') === null) {
@@ -53,8 +53,12 @@ const filtersAndSort = (data, deletedRows, showActiveOnly) => {
   }
 
   if (showActiveOnly === 'yes') {
-
     newData = newData.filter((row) => row.isActive === true);
+  }
+
+  if (invisibleCards.length !== 0) {
+    const items = invisibleCards.map((obj) => obj.value);
+    newData = newData.filter((row) => !items.includes(row.card));
   }
 
   // if (localState.invisibleColumns.length !== 0) { // only for exportCSV
@@ -82,7 +86,8 @@ const rowsSelector = createSelector(
   (state) => state.data,
   (state) => state.deletedRows,
   (state) => state.showActiveOnly,
-  (data, deletedRows, showActiveOnly) => filtersAndSort(data, deletedRows, showActiveOnly),
+  (state) => state.invisibleCards,
+  (data, deletedRows, showActiveOnly, invisibleCards) => filtersAndSort(data, deletedRows, showActiveOnly, invisibleCards),
 );
 // const searchItem = (data, searchText) => {
 

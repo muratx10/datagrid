@@ -36,7 +36,7 @@ const exportCSV = (obj) => {
 };
 
 const App = ({
-  toggleActive, deleteRows, data, hideColumn, invisibleColumns, setTurboMode,
+  toggleActive, deleteRows, data, hideColumn, invisibleColumns, setTurboMode, showActiveOnly,
 }) => (
   <>
     <Grid
@@ -59,6 +59,7 @@ const App = ({
             <Switch
               color="primary"
               onChange={toggleActive}
+              checked={showActiveOnly === 'yes'}
             />
             <Chip color="default" label="ACTIVE members only" />
           </div>
@@ -118,6 +119,7 @@ const App = ({
 const mapStateToProps = (state) => ({
   data: state.data,
   invisibleColumns: state.invisibleColumns,
+  showActiveOnly: state.showActiveOnly,
 });
 
 const mapDispatchToProps = (dispatch) => ({

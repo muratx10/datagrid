@@ -19,9 +19,10 @@ const options = [
   },
 ];
 
-const MultiSelect = ({ sort }) => ( //
+const MultiSelect = ({ sort, invisibleCards }) => ( //
   <Select
-    defaultValue={options}
+    placeholder="Hide enum items"
+    defaultValue={invisibleCards}
     isMulti
     name="multiselect"
     options={options}
@@ -38,13 +39,12 @@ const MultiSelect = ({ sort }) => ( //
   />
 );
 
-// const mapStateToProps = (state) => ({
-//   showActiveUsers: state.showActiveUsers,
-//   data: state.data,
-// });
+const mapStateToProps = (state) => ({
+  invisibleCards: state.invisibleCards,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   sort: (chosenItems) => dispatch(sortEnum(chosenItems)),
 });
 
-export default connect(null, mapDispatchToProps)(MultiSelect);
+export default connect(mapStateToProps, mapDispatchToProps)(MultiSelect);
