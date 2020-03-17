@@ -8,12 +8,14 @@ import './App.scss';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ExportToCsv } from 'export-to-csv';
-import Multiselect from '../Multiselect/Multiselect';
+import Multiselect from '../Multiselect/MultiSelect';
 import DataSheet from '../DataSheet';
-import { toggleActiveUsers } from '../../store/actions/datasheet';
+import {
+  setTurboMode,
+  toggleActiveUsers,
+} from '../../store/actions/datasheet';
 import SearchField from '../Search';
 import { deleteSelectedRows, setInvisibleColumn } from '../../store/actions/app';
-// import ColumnMultiselect from '../Multiselect/ColumnMultiselect';
 
 const exportCSV = (obj) => {
   const options = {
@@ -34,7 +36,7 @@ const exportCSV = (obj) => {
 };
 
 const App = ({
-  toggleActiveUsers, deleteRows, data, hideColumn, invisibleColumns,
+  toggleActiveUsers, deleteRows, data, hideColumn, invisibleColumns, setTurboMode
 }) => (
   <>
     <Grid
@@ -49,8 +51,22 @@ const App = ({
       }}
     >
       <div>
-        <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} />
-        <Chip color="default" label="ACTIVE members only" />
+        <Grid
+          container
+          direction="column"
+        >
+          <div>
+            <Switch color="primary"
+                    onChange={(e) => toggleActiveUsers(e.target.checked)} />
+            <Chip color="default" label="ACTIVE members only" />
+          </div>
+          <div>
+            <Switch color="primary"
+                    onChange={(e) => setTurboMode(e.target.checked)}
+            />
+            <Chip color="default" label="TURBO mode ON" />
+          </div>
+        </Grid>
       </div>
       <Typography variant="h2">
         Data Grid
@@ -103,9 +119,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
+  setTurboMode: (isTurboModeOn) => dispatch(setTurboMode(isTurboModeOn)),
   deleteRows: () => dispatch(deleteSelectedRows()),
   hideColumn: (id) => dispatch(setInvisibleColumn(id)),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

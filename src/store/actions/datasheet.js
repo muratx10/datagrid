@@ -9,7 +9,7 @@ import {
   SET_CLICKED,
   RESET_SORT_TYPE,
   ACTIVE_USERS,
-  SORTING_ENUM,
+  SORTING_ENUM, TURBO_MODE,
 } from './actionTypes';
 
 const _ = require('lodash');
@@ -53,6 +53,13 @@ export function toggleActiveUsers(isActive) {
     } else {
       dispatch(setActiveUsers(isActive));
     }
+  };
+}
+
+export function setTurboMode(isTurboModeOn) {
+  return {
+    type: TURBO_MODE,
+    isTurboModeOn,
   };
 }
 

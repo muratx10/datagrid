@@ -19,7 +19,7 @@ const options = [
   },
 ];
 
-const Multiselect = ({ sort }) => ( //
+const MultiSelect = ({ sort }) => ( //
   <Select
     defaultValue={options}
     isMulti
@@ -47,4 +47,4 @@ const mapDispatchToProps = (dispatch) => ({
   sort: (chosenItems) => dispatch(sortEnum(chosenItems)),
 });
 
-export default connect(null, mapDispatchToProps)(Multiselect);
+export default connect(null, mapDispatchToProps)(MultiSelect);
