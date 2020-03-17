@@ -21,32 +21,34 @@ const RowComponent = ({
   style,
   invisibleColumns,
   key,
+  activeRows,
 }) => {
-  const [activeRow, setActiveRow] = useState(false);
-  const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
-
-  console.log(`key: ${key}`);
+  // const [activeRow, setActiveRow] = useState(false);
+  // const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
+  const activeClass = activeRows.includes(data[index].id) ? 'align-items-center row-item activeRow' : 'align-items-center row-item';
+  // console.log(`key: ${key}`);
   const idx = (data[index].id).toString();
   const chooseRow = () => {
-    console.log('eventID', idx);
+    // console.log('eventID', idx);
 
-    setActiveRow(!activeRow);
+    // setActiveRow(!activeRow);
     setActiveRows(data[index].id);
   };
   const currency = data[index].currency === 'Codes specifically reserved for'
   + ' testing purposes' ? 'Euro' : data[index].currency;
   return (
     <Row
-      className="align-items-center row-item"
+      className={activeClass}
       id={data[index].id}
       style={style}
       key={key}
     >
-      <Col className="cell fixedCol fixedCol" xs={2} style={isActiveStyle}>
+      <Col className="cell fixedCol fixedCol" xs={2}>
         <Checkbox
           id={idx}
           color="primary"
           onChange={chooseRow}
+          checked={activeRows.includes(data[index].id)}
         />
         <IconButton
           aria-label="delete"
@@ -60,30 +62,30 @@ const RowComponent = ({
         &nbsp;
         {data[index].name}
       </Col>
-      <Col xs={1} className="cell" style={isActiveStyle}>
+      <Col xs={1} className="cell">
         {data[index].gender ? 'male' : 'female'}
       </Col>
-      <Col xs={1} className={invisibleColumns.includes('birthDate') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
+      <Col xs={1} className={invisibleColumns.includes('birthDate') ? 'invisible cell' : 'cell'}>
         {data[index].birthDate}
       </Col>
-      <Col xs={2} className="cell" style={isActiveStyle}>
+      <Col xs={2} className="cell">
         {data[index].locationName.city}
         &nbsp;
         {data[index].locationName.zipcode}
       </Col>
-      <Col xs={1} className={invisibleColumns.includes('bankName') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
+      <Col xs={1} className={invisibleColumns.includes('bankName') ? 'invisible cell' : 'cell'}>
         {data[index].bankName}
       </Col>
-      <Col xs={2} className="cell" style={isActiveStyle}>
+      <Col xs={2} className="cell">
         {currency}
       </Col>
-      <Col xs={1} className="cell text-right" style={isActiveStyle}>
+      <Col xs={1} className="cell text-right">
         {data[index].amount}
       </Col>
-      <Col xs={1} className="cell" style={isActiveStyle}>
+      <Col xs={1} className="cell">
         {data[index].card}
       </Col>
-      <Col className="cell text-center" xs={1} style={isActiveStyle}>
+      <Col className="cell text-center" xs={1}>
         <Badge variant={data[index].isActive ? 'success' : 'danger'}>
           {data[index].isActive ? 'active' : 'locked'}
         </Badge>
@@ -97,6 +99,7 @@ function mapStateToProps(state) {
   return {
     turboMode: state.isTurboModeOn,
     invisibleColumns: state.invisibleColumns,
+    activeRows: state.activeRows,
   };
 }
 

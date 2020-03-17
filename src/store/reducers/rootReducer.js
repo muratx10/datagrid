@@ -53,6 +53,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         deletedRows: [...state.deletedRows, ...state.activeRows],
+        activeRows: [],
       };
     case 'TABLE_SEARCH':
       return { ...state, search: action.payload };
@@ -110,6 +111,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         deletedRows: [...state.deletedRows, action.payload],
+        activeRows: [],
       };
     default:
       return state;
