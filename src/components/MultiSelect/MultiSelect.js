@@ -30,10 +30,11 @@ const MultiSelect = ({ sort, invisibleCards }) => ( //
     classNamePrefix="select"
     onChange={sort}
     styles={{
-      menu: (provided) => ({ ...provided, zIndex: 9999 }),
+      menu: (provided) => ({ ...provided, zIndex: 99999 }),
       container: () => ({
         minWidth: 250,
-        position: 'relative',
+        position: 'absolute',
+        right: '10%',
       }),
     }}
   />
