@@ -45,6 +45,8 @@ function setActiveUsers(str) {
 
 export function toggleActiveUsers() {
   return (dispatch, getState) => {
+    const state = getState();
+    localStorage.setItem('reduxState', JSON.stringify(state));
     const { showActiveOnly } = getState();
     if (showActiveOnly === 'no') {
       dispatch(setActiveUsers('yes'));

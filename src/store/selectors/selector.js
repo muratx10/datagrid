@@ -53,6 +53,7 @@ const filtersAndSort = (data, deletedRows, showActiveOnly) => {
   }
 
   if (showActiveOnly === 'yes') {
+
     newData = newData.filter((row) => row.isActive === true);
   }
 
