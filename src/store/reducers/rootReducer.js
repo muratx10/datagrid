@@ -3,31 +3,47 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { fakeData } from '../../data/fakeDataGenerator';
 import {
-  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM, SEARCH, SET_ACTIVE, SET_DELETED,
+  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM, SEARCH, SET_ACTIVE, SET_DELETED, DELETE_ROWS, SET_INVISIBLE,
 } from '../actions/actionTypes';
 
-const initialState = {
-  sortType: {
-    currency: '',
-    amount: '',
-  },
-  data: fakeData,
-  clickedField: '',
-  icon: {
-    currency: faSort,
-    amount: faSort,
-  },
-  // activeRows: new Set(),
-  // deletedRows: new Set(),
-  activeRows: [],
-  deletedRows: [],
-  search: '',
-};
-
+// let initialState = {};
+// if (localStorage.getItem('reduxState') !== null) {
+//   initialState = localStorage.getItem('reduxState');
+// } else {
+const initialState = localStorage.getItem('reduxState')
+  ? JSON.parse(localStorage.getItem('reduxState'))
+  : {
+    sortType: {
+      currency: '',
+      amount: '',
+    },
+    data: fakeData,
+    clickedField: '',
+    icon: {
+      currency: faSort,
+      amount: faSort,
+    },
+    activeRows: [],
+    deletedRows: [],
+    invisibleColumns: [],
+    // 'Name', 'Gender', 'Date of Birth', 'Address', 'Bank', 'Currency', 'Balance', 'Card', 'Status',
+    search: '',
+  };
+// }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_INVISIBLE:
+      return {
+        ...state,
+        invisibleColumns: action.payload,
+      };
+    case DELETE_ROWS:
+      return {
+        ...state,
+        deletedRows: [...state.deletedRows, ...state.activeRows],
+      };
     case 'TABLE_SEARCH':
-      return {...state, search: action.payload};
+      return { ...state, search: action.payload };
     case SORT:
       return {
         ...state,
@@ -64,11 +80,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         data: action.data,
       };
-    case SEARCH:
-      return {
-        ...state,
-        data: action.data,
-      };
+    // case SEARCH:
+    //   return {
+    //     ...state,
+    //     data: action.data,
+    //   };
     case SET_ACTIVE:
       return {
         ...state,

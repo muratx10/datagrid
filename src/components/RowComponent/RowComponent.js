@@ -10,6 +10,7 @@ import { Checkbox } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
+import './RowComponent.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
 import { fakeData } from '../../data/fakeDataGenerator';
 
@@ -19,7 +20,8 @@ const RowComponent = ({
   data,
   index,
   style,
-  key
+  invisibleColumns,
+  key,
 }) => {
   const [activeRow, setActiveRow] = useState(false);
   const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
@@ -27,7 +29,7 @@ const RowComponent = ({
     setActiveRow(!activeRow);
     setActiveRows(event.target.id);
   };
-  console.log('key: ' + key);
+  console.log(`key: ${key}`);
   const idx = toString(data[index].id);
   return (
     <Row className="align-items-center row-item" id={data[index].id} style={style} key={key}>
@@ -49,7 +51,7 @@ const RowComponent = ({
       <Col xs={1} className="cell" style={isActiveStyle}>
         {data[index].gender ? 'male' : 'female'}
       </Col>
-      <Col xs={1} className="cell" style={isActiveStyle}>
+      <Col xs={1} className={invisibleColumns.includes('birthDate') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
         {data[index].birthDate}
       </Col>
       <Col xs={2} className="cell" style={isActiveStyle}>
@@ -57,7 +59,7 @@ const RowComponent = ({
         &nbsp;
         {data[index].locationName.zipcode}
       </Col>
-      <Col xs={1} className="cell" style={isActiveStyle}>
+      <Col xs={1} className={invisibleColumns.includes('bankName') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
         {data[index].bankName}
       </Col>
       <Col xs={2} className="cell" style={isActiveStyle}>
@@ -79,11 +81,11 @@ const RowComponent = ({
 };
 
 
-// function mapStateToProps(state) {
-//   return {
-//     data: state.data,
-//   };
-// }
+function mapStateToProps(state) {
+  return {
+    invisibleColumns: state.invisibleColumns,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -92,4 +94,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(RowComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(RowComponent);

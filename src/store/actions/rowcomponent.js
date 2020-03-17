@@ -31,10 +31,10 @@ export function setActiveRowId(id) {
   };
 }
 
-function setDeleted(deletedRows) {
+export function deleteRow(id) {
   return {
     type: SET_DELETED,
-    deletedRows,
+    payload: id,
   };
 }
 
@@ -50,14 +50,12 @@ function setDeleted(deletedRows) {
 //   };
 // }
 
-export function deleteRow(id) {
-  return (dispatch, getState) => {
-    const { activeRows, deletedRows } = getState();
-    if (activeRows.includes(id)) {
-      deletedRows.push(id);
-      console.log(deletedRows);
-
-      dispatch(setDeleted(deletedRows));
-    }
-  };
-}
+// export function deleteRow(id) {
+//   return (dispatch, getState) => {
+//     const { activeRows, deletedRows } = getState();
+//     if (activeRows.includes(id)) {
+//       deletedRows.push(id);
+//       dispatch(setDeleted(deletedRows));
+//     }
+//   };
+// }

@@ -7,3 +7,5 @@ export const SORTING_ENUM = 'SORTING_ENUM';
 export const SEARCH = 'SEARCH';
 export const SET_ACTIVE = 'SET_ACTIVE';
 export const SET_DELETED = 'SET_DELETED';
+export const DELETE_ROWS = 'DELETE_ROWS';
+export const SET_INVISIBLE = 'SET_INVISIBLE';
