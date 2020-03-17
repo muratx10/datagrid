@@ -8,7 +8,7 @@ import './App.scss';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ExportToCsv } from 'export-to-csv';
-import Multiselect from '../Multiselect/MultiSelect';
+import MultiSelect from '../MultiSelect/MultiSelect';
 import DataSheet from '../DataSheet';
 import {
   setTurboMode,
@@ -36,7 +36,13 @@ const exportCSV = (obj) => {
 };
 
 const App = ({
-  toggleActive, deleteRows, data, hideColumn, invisibleColumns, setTurboMode, showActiveOnly
+  toggleActive,
+  deleteRows,
+  data,
+  hideColumn,
+  invisibleColumns,
+  setTurboMode,
+  showActiveOnly,
 }) => (
   <>
     <Grid
@@ -81,7 +87,7 @@ const App = ({
         avatar={<Avatar>!</Avatar>}
         label=" Ctrl + H to show Redux DevTools"
       />
-      <Multiselect />
+      <MultiSelect />
       <FormControlLabel
         control={(
           <Checkbox

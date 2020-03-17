@@ -15,7 +15,6 @@ function setInvisible(invisibleColumns) {
 
 export function setInvisibleColumn(id) {
   return (dispatch, getState) => {
-    console.log(id);
 
     const { invisibleColumns } = getState();
     const clone = [...invisibleColumns];

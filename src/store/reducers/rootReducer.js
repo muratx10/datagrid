@@ -16,10 +16,6 @@ import {
   SEARCH,
 } from '../actions/actionTypes';
 
-// let initialState = {};
-// if (localStorage.getItem('reduxState') !== null) {
-//   initialState = localStorage.getItem('reduxState');
-// } else {
 const initialState = localStorage.getItem('reduxState')
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {
@@ -37,7 +33,7 @@ const initialState = localStorage.getItem('reduxState')
     activeRows: [],
     deletedRows: [],
     invisibleColumns: [],
-    // 'Name', 'Gender', 'Date of Birth', 'Address', 'Bank', 'Currency', 'Balance', 'Card', 'Status',
+    invisibleCards: [],
     search: '',
     turboMode: true,
   };
@@ -53,6 +49,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         deletedRows: [...state.deletedRows, ...state.activeRows],
+        activeRows: [],
       };
     case 'TABLE_SEARCH':
       return { ...state, search: action.payload };
@@ -94,7 +91,7 @@ const rootReducer = (state = initialState, action) => {
     case SORTING_ENUM:
       return {
         ...state,
-        data: action.data,
+        invisibleCards: [...action.payload],
       };
     // case SEARCH:
     //   return {
@@ -110,6 +107,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         deletedRows: [...state.deletedRows, action.payload],
+        activeRows: [],
       };
     default:
       return state;

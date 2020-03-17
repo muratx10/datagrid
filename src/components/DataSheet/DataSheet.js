@@ -87,17 +87,17 @@ const DataSheet = ({
         Status
       </Col>
     </Row>
-    {/*<List*/}
-    {/*  height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}*/}
-    {/*  width={1700}*/}
-    {/*  itemSize={40}*/}
-    {/*  itemCount={data.length}*/}
-    {/*  itemData={data}*/}
-    {/*  itemKey={_.uniqueId}*/}
-    {/*>*/}
-    {/*  {RowComponent}*/}
-    {/*</List>*/}
-    {dataToProps(data)}
+    <List
+      height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
+      width={1700}
+      itemSize={40}
+      itemCount={data.length}
+      itemData={data}
+      itemKey={_.uniqueId}
+    >
+      {RowComponent}
+    </List>
+    {/*{dataToProps(data)}*/}
   </Container>
 );
 
