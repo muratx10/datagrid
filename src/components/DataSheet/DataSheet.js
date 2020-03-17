@@ -23,11 +23,11 @@ const dataToProps = (data) => data.map((item, idx) => {
       key={item.id}
       id={item.id}
       name={item.name}
-      gender={item.gender}
+      residence={item.residence}
       birthDate={item.birthDate}
       city={item.locationName.city}
       zipcode={item.locationName.zipcode}
-      bankName={item.bankName}
+      companyName={item.companyName}
       currency={currency}
       amount={item.amount}
       card={item.card}
@@ -37,15 +37,27 @@ const dataToProps = (data) => data.map((item, idx) => {
 });
 
 const DataSheet = ({
-  sorting, data, icon1, icon2, invisibleColumns, turboMode
+  sorting, data, icon1, icon2, icon3, invisibleColumns, turboMode
 }) => (
   <Container fluid>
     <Row className="header">
       <Col className="fixedColHeader hCell fixedCol" xs={2}>
         Name
+        &nbsp;
+        &nbsp;
+        <Badge
+          className="button"
+          variant="secondary"
+          onClick={() => sorting({
+            event,
+            field: 'name',
+          })}
+        >
+          <FontAwesomeIcon icon={icon3} />
+        </Badge>
       </Col>
       <Col className="hCell" xs={1}>
-        Gender
+        Residence
       </Col>
       <Col
         className={invisibleColumns.includes('birthDate') ? 'invisible hCell' : 'hCell'}
@@ -56,9 +68,10 @@ const DataSheet = ({
         Address
       </Col>
       <Col
-        className={invisibleColumns.includes('bankName') ? 'invisible hCell' : 'hCell'}
+        className={invisibleColumns.includes('companyName') ? 'invisible'
+          + ' hCell' : 'hCell'}
         xs={1}>
-        Bank
+        Company
       </Col>
       <Col className="hCell" xs={2}>
         Currency
@@ -69,7 +82,7 @@ const DataSheet = ({
           variant="secondary"
           onClick={() => sorting({
             event,
-            field: 'currency'
+            field: 'currency',
           })}
         >
           <FontAwesomeIcon icon={icon1} />
@@ -84,7 +97,7 @@ const DataSheet = ({
           variant="secondary"
           onClick={() => sorting({
             event,
-            field: 'amount'
+            field: 'amount',
           })}
         >
           <FontAwesomeIcon icon={icon2} />
@@ -101,7 +114,7 @@ const DataSheet = ({
       turboMode ? (
         <List
           height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
-          width={1700}
+          width={1900}
           itemSize={40}
           itemCount={data.length}
           itemData={data}
@@ -122,6 +135,7 @@ function mapStateToProps(state) {
     clickedField: state.clickedField,
     icon1: state.icon.currency,
     icon2: state.icon.amount,
+    icon3: state.icon.name,
     invisibleColumns: state.invisibleColumns,
     turboMode: state.isTurboModeOn,
   };

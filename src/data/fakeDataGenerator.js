@@ -1,25 +1,24 @@
 import faker from 'faker';
 
+const moment = require('moment');
+
 faker.seed(100);
 
 const generateFakeData = (id) => ({
   id,
   name: faker.name.findName(),
-  birthDate: faker.date.past(20).toUTCString(),
+  birthDate: moment(faker.date.past(20)).format('ll'),
   startTime: faker.date.past(5).getTime(),
-  bankName: `${faker.lorem.word()} Bank`.toUpperCase(),
+  companyName: `${faker.company.companyName()} LLC`.toUpperCase(),
   amount: Math.trunc(faker.finance.amount()),
   currency: faker.finance.currencyName(),
-  gender: faker.random.boolean(),
+  residence: faker.random.boolean(),
   card: faker.random.arrayElement(['Visa', 'Mastercard', 'Maestro']),
-  // eslint-disable-next-line max-len,no-undef
-  // status: tableHeader.status[faker.random.number(tableHeader.status.length
-  // - 1)], // enum
   locationName: {
     city: faker.address.city(),
     zipcode: faker.address.zipCode(),
-  }, // object
-  isActive: faker.random.boolean(), // boolean
+  },
+  isActive: faker.random.boolean(),
 });
 
 export const generateFakeArray = (recordsCount) => [...new Array(recordsCount)]

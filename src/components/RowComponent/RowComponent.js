@@ -12,6 +12,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
 import './RowComponent.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
+import visa from '../../assets/visa.png';
+import mastercard from '../../assets/mastercard.svg.png';
+import maestro from '../../assets/maestro.svg.png';
 
 const RowComponent = ({
   setActiveRows,
@@ -23,15 +26,9 @@ const RowComponent = ({
   key,
   activeRows,
 }) => {
-  // const [activeRow, setActiveRow] = useState(false);
-  // const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
   const activeClass = activeRows.includes(data[index].id) ? 'align-items-center row-item activeRow' : 'align-items-center row-item';
-  // console.log(`key: ${key}`);
   const idx = (data[index].id).toString();
   const chooseRow = () => {
-    // console.log('eventID', idx);
-
-    // setActiveRow(!activeRow);
     setActiveRows(data[index].id);
   };
   const currency = data[index].currency === 'Codes specifically reserved for'
@@ -43,7 +40,7 @@ const RowComponent = ({
       style={style}
       key={key}
     >
-      <Col className="cell fixedCol fixedCol" xs={2}>
+      <Col className="cell fixedCol" xs={2}>
         <Checkbox
           id={idx}
           color="primary"
@@ -56,14 +53,14 @@ const RowComponent = ({
         >
           <DeleteIcon />
         </IconButton>
-        <Badge variant="secondary">
+        <Badge variant="primary" className="badgeID">
           {data[index].id}
         </Badge>
         &nbsp;
         {data[index].name}
       </Col>
       <Col xs={1} className="cell">
-        {data[index].gender ? 'male' : 'female'}
+        {data[index].residence ? 'resident' : 'non-resident'}
       </Col>
       <Col xs={1} className={invisibleColumns.includes('birthDate') ? 'invisible cell' : 'cell'}>
         {data[index].birthDate}
@@ -73,8 +70,8 @@ const RowComponent = ({
         &nbsp;
         {data[index].locationName.zipcode}
       </Col>
-      <Col xs={1} className={invisibleColumns.includes('bankName') ? 'invisible cell' : 'cell'}>
-        {data[index].bankName}
+      <Col xs={1} className={invisibleColumns.includes('companyName') ? 'invisible cell' : 'cell'}>
+        {data[index].companyName}
       </Col>
       <Col xs={2} className="cell">
         {currency}

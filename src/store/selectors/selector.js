@@ -83,7 +83,7 @@ const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards, searc
   //   newData = newData.map((row) => {
   //     const clone = { ...row };
   //     // localState.invisibleColumns.forEach((item) => { delete clone[item]; });
-  //     delete clone.gender;
+  //     delete clone.residence;
   //     console.log(clone); // invisible columns
   //     return clone;
   //   });
@@ -115,9 +115,9 @@ const rowsSelector = createSelector(
 //       row.name,
 //       row.birthDate,
 //       row.amount,
-//       row.bankName,
+//       row.companyName,
 //       row.currency,
-//       row.gender,
+//       row.residence,
 //       row.card,
 //       row.locationName.city,
 //       row.locationName.zipcode,

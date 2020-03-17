@@ -19,7 +19,7 @@ td, th {
 
 
 .container-fluid {
-  min-width: 1700px !important;
+  min-width: 1900px !important;
   width: 100vw;
   max-width: none !important;
   margin-left: -15px;
@@ -60,7 +60,8 @@ td, th {
   background: white;
 
   &:hover,
-  &:hover .fixedCol{
+  &:hover .fixedCol,
+  &:hover .fixedColN{
     background: lightgray;
   }
 }

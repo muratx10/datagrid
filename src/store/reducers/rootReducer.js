@@ -22,6 +22,7 @@ const initialState = localStorage.getItem('reduxState')
     sortType: {
       currency: '',
       amount: '',
+      name: '',
     },
     data: fakeData,
     clickedField: '',
@@ -56,7 +57,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         sortType: action.sortType,
-        icon: action.icon || { currency: faSort, amount: faSort },
+        icon: action.icon || { currency: faSort, amount: faSort, name: faSort },
         data: action.data || fakeData,
       };
     case SET_CLICKED:
@@ -70,10 +71,12 @@ const rootReducer = (state = initialState, action) => {
         sortType: {
           currency: '',
           amount: '',
+          name: '',
         },
         icon: {
           currency: faSort,
           amount: faSort,
+          name: faSort,
         },
       };
     case ACTIVE_USERS:

@@ -16,11 +16,11 @@ import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
 const RowComponentNoVirtual = ({
   id,
   name,
-  gender,
+  residence,
   birthDate,
   city,
   zipcode,
-  bankName,
+  companyName,
   currency,
   amount,
   card,
@@ -41,7 +41,7 @@ const RowComponentNoVirtual = ({
       className="align-items-center row-item"
       id={id}
     >
-      <Col className="cell fixedCol fixedCol" xs={2} style={isActiveStyle}>
+      <Col className="cell fixedColN" xs={2} style={isActiveStyle}>
         <Checkbox
           id={idx}
           color="primary"
@@ -53,14 +53,14 @@ const RowComponentNoVirtual = ({
         >
           <DeleteIcon />
         </IconButton>
-        <Badge variant="secondary">
+        <Badge variant="secondary" className="badgeID">
           {id}
         </Badge>
         &nbsp;
         {name}
       </Col>
       <Col xs={1} className="cell" style={isActiveStyle}>
-        {gender ? 'male' : 'female'}
+        {residence ? 'resident' : 'non-resident'}
       </Col>
       <Col xs={1} className={invisibleColumns.includes('birthDate') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
         {birthDate}
@@ -71,7 +71,7 @@ const RowComponentNoVirtual = ({
         {zipcode}
       </Col>
       <Col xs={1} className={invisibleColumns.includes('bankName') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
-        {bankName}
+        {companyName}
       </Col>
       <Col xs={2} className="cell" style={isActiveStyle}>
         {currency}

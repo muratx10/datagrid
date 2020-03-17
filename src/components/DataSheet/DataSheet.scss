@@ -6,7 +6,7 @@
   //height: 40px;
   text-transform: uppercase;
   color: white;
-  background: lighten(#000000, 20%);
+  background: #4051B6;
 }
 
 .active {
@@ -28,14 +28,21 @@
   z-index: 99 !important;
   left: 0;
   transition: 150ms;
+}
 
+.fixedColN {
+  position: sticky !important;
+  z-index: 99 !important;
+  left: 0;
+  transition: 150ms;
+  background: white;
 }
 
 .fixedColHeader {
   position: sticky;
   z-index: 99;
   left: 0;
-  background: lighten(#000000, 20%);
+  background: #4051B6;
 }
 
 .cell {
@@ -49,4 +56,7 @@
 
 .invisible {
   display: none;
+}
+.badgeID {
+  background: #4051B6;
 }
