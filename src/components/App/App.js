@@ -34,7 +34,7 @@ const exportCSV = (obj) => {
 };
 
 const App = ({
-  toggleActiveUsers, deleteRows, data, hideColumn, invisibleColumns,
+  toggleActive, deleteRows, data, hideColumn, invisibleColumns,
 }) => (
   <>
     <Grid
@@ -49,7 +49,7 @@ const App = ({
       }}
     >
       <div>
-        <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} />
+        <Switch color="primary" onChange={toggleActive} />
         <Chip color="default" label="ACTIVE members only" />
       </div>
       <Typography variant="h2">
@@ -102,7 +102,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
+  toggleActive: () => dispatch(toggleActiveUsers()),
   deleteRows: () => dispatch(deleteSelectedRows()),
   hideColumn: (id) => dispatch(setInvisibleColumn(id)),
 });

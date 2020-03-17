@@ -23,6 +23,7 @@ const initialState = localStorage.getItem('reduxState')
       currency: faSort,
       amount: faSort,
     },
+    showActiveOnly: 'no',
     activeRows: [],
     deletedRows: [],
     invisibleColumns: [],
@@ -72,8 +73,8 @@ const rootReducer = (state = initialState, action) => {
     case ACTIVE_USERS:
       return {
         ...state,
-        showActiveUsers: action.isActive,
-        data: action.data || fakeData,
+        showActiveOnly: action.payload,
+        // data: action.data || fakeData,
       };
     case SORTING_ENUM:
       return {
@@ -88,7 +89,7 @@ const rootReducer = (state = initialState, action) => {
     case SET_ACTIVE:
       return {
         ...state,
-        activeRows: action.activeRows,
+        activeRows: action.payload,
       };
     case SET_DELETED:
       return {

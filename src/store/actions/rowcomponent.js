@@ -3,31 +3,20 @@ import { SET_ACTIVE, SET_DELETED } from './actionTypes';
 function setActive(activeRows) {
   return {
     type: SET_ACTIVE,
-    activeRows,
+    payload: activeRows,
   };
 }
-
-// export function setActiveRowId(id) {
-//   return (dispatch, getState) => {
-//     const { activeRows } = getState();
-//     if (activeRows.has(+id)) {
-//       activeRows.delete(+id);
-//     } else {
-//       activeRows.add(+id);
-//     }
-//     dispatch(setActive(activeRows));
-//   };
-// }
 
 export function setActiveRowId(id) {
   return (dispatch, getState) => {
     const { activeRows } = getState();
-    if (activeRows.includes(+id)) {
-      activeRows.splice(activeRows.indexOf(+id), 1);
+    const clone = [...activeRows];
+    if (clone.includes(+id)) {
+      clone.splice(clone.indexOf(+id), 1);
     } else {
-      activeRows.push(+id);
+      clone.push(+id);
     }
-    dispatch(setActive(activeRows));
+    dispatch(setActive(clone));
   };
 }
 

@@ -39,17 +39,21 @@ import { createSelector } from 'reselect';
 //   // }
 // };
 
-const filtersAndSort = (data, deletedRows) => {
+const filtersAndSort = (data, deletedRows, showActiveOnly) => {
   console.log('inside selector');
 
   if (deletedRows.length === 0 && localStorage.getItem('reduxState') === null) {
     return data;
   }
   let newData = [...data];
-  const localState = JSON.parse(localStorage.getItem('reduxState'));
+  // const localState = JSON.parse(localStorage.getItem('reduxState'));
 
-  if (localState.deletedRows.length !== 0) {
-    newData = newData.filter((row) => !deletedRows.includes(row.id));
+  if (deletedRows.length !== 0) {
+    newData = newData.filter((row) => !deletedRows.includes(+row.id));
+  }
+
+  if (showActiveOnly === 'yes') {
+    newData = newData.filter((row) => row.isActive === true);
   }
 
   // if (localState.invisibleColumns.length !== 0) { // only for exportCSV
@@ -76,7 +80,8 @@ const filtersAndSort = (data, deletedRows) => {
 const rowsSelector = createSelector(
   (state) => state.data,
   (state) => state.deletedRows,
-  (data, deletedRows) => filtersAndSort(data, deletedRows),
+  (state) => state.showActiveOnly,
+  (data, deletedRows, showActiveOnly) => filtersAndSort(data, deletedRows, showActiveOnly),
 );
 // const searchItem = (data, searchText) => {
 
