@@ -125,28 +125,18 @@ export function sort({ event, field }) {
   };
 }
 
-export function sortingEnum(data) {
+function sortingEnum(chosenItems) {
   return {
     type: SORTING_ENUM,
-    data,
+    payload: chosenItems,
   };
 }
 
 export function sortEnum(chosenItems) {
   return (dispatch, getState) => {
-    dispatch(resetSortType());
-    if (chosenItems.length === 0) {
-      const sortedData = [];
-      console.log('-------------------');
-      dispatch(sortingEnum(sortedData));
-      return;
-    }
-
-    const { data } = getState();
-    const chosenFields = chosenItems.map((obj) => obj.value);
-    const sortedData = _.filter(data, (item) => item.card === chosenFields[0] || item.card === chosenFields[1] || item.card === chosenFields[2]); // а умный путь?
-    console.log(sortedData);
-
-    dispatch(sortingEnum(sortedData));
+    const state = getState();
+    localStorage.setItem('reduxState', JSON.stringify(state));
+    // const items = chosenItems.map((obj) => obj.value);
+    dispatch(sortingEnum(chosenItems));
   };
 }

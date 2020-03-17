@@ -37,6 +37,7 @@ const initialState = localStorage.getItem('reduxState')
     activeRows: [],
     deletedRows: [],
     invisibleColumns: [],
+    invisibleCards: [],
     // 'Name', 'Gender', 'Date of Birth', 'Address', 'Bank', 'Currency', 'Balance', 'Card', 'Status',
     search: '',
     turboMode: true,
@@ -95,7 +96,7 @@ const rootReducer = (state = initialState, action) => {
     case SORTING_ENUM:
       return {
         ...state,
-        data: action.data,
+        invisibleCards: [...action.payload],
       };
     // case SEARCH:
     //   return {
