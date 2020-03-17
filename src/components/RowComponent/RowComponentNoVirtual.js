@@ -13,30 +13,33 @@ import '../DataSheet/DataSheet.scss';
 import './RowComponent.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
 
-const RowComponent = ({
+const RowComponentNoVirtual = ({
+  id,
+  name,
+  gender,
+  birthDate,
+  city,
+  zipcode,
+  bankName,
+  currency,
+  amount,
+  card,
+  isActive,
   setActiveRows,
   setDeletedRows,
-  data,
-  index,
-  style,
   invisibleColumns,
-  key,
 }) => {
   const [activeRow, setActiveRow] = useState(false);
   const isActiveStyle = activeRow ? { backgroundColor: 'lightgray' } : null;
   const chooseRow = () => {
     setActiveRow(!activeRow);
-    setActiveRows(data[index].id);
+    setActiveRows(id);
   };
-  const idx = data[index].id.toString();
-  const currency = data[index].currency === 'Codes specifically reserved for'
-  + ' testing purposes' ? 'Euro' : data[index].currency;
+  const idx = id.toString();
   return (
     <Row
       className="align-items-center row-item"
-      id={data[index].id}
-      style={style}
-      key={key}
+      id={id}
     >
       <Col className="cell fixedCol fixedCol" xs={2} style={isActiveStyle}>
         <Checkbox
@@ -46,42 +49,42 @@ const RowComponent = ({
         />
         <IconButton
           aria-label="delete"
-          onClick={() => setDeletedRows(data[index].id)}
+          onClick={() => setDeletedRows(id)}
         >
           <DeleteIcon />
         </IconButton>
         <Badge variant="secondary">
-          {data[index].id}
+          {id}
         </Badge>
         &nbsp;
-        {data[index].name}
+        {name}
       </Col>
       <Col xs={1} className="cell" style={isActiveStyle}>
-        {data[index].gender ? 'male' : 'female'}
+        {gender ? 'male' : 'female'}
       </Col>
       <Col xs={1} className={invisibleColumns.includes('birthDate') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
-        {data[index].birthDate}
+        {birthDate}
       </Col>
       <Col xs={2} className="cell" style={isActiveStyle}>
-        {data[index].locationName.city}
+        {city}
         &nbsp;
-        {data[index].locationName.zipcode}
+        {zipcode}
       </Col>
       <Col xs={1} className={invisibleColumns.includes('bankName') ? 'invisible cell' : 'cell'} style={isActiveStyle}>
-        {data[index].bankName}
+        {bankName}
       </Col>
       <Col xs={2} className="cell" style={isActiveStyle}>
         {currency}
       </Col>
       <Col xs={1} className="cell text-right" style={isActiveStyle}>
-        {data[index].amount}
+        {amount}
       </Col>
       <Col xs={1} className="cell" style={isActiveStyle}>
-        {data[index].card}
+        {card}
       </Col>
       <Col className="cell text-center" xs={1} style={isActiveStyle}>
-        <Badge variant={data[index].isActive ? 'success' : 'danger'}>
-          {data[index].isActive ? 'active' : 'locked'}
+        <Badge variant={isActive ? 'success' : 'danger'}>
+          {isActive ? 'active' : 'locked'}
         </Badge>
       </Col>
     </Row>
@@ -103,4 +106,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RowComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(RowComponentNoVirtual);
