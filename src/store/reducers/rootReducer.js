@@ -37,7 +37,6 @@ const initialState = localStorage.getItem('reduxState')
     search: '',
     turboMode: true,
   };
-// }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INVISIBLE:
@@ -51,7 +50,7 @@ const rootReducer = (state = initialState, action) => {
         deletedRows: [...state.deletedRows, ...state.activeRows],
         activeRows: [],
       };
-    case 'TABLE_SEARCH':
+    case SEARCH:
       return { ...state, search: action.payload };
     case SORT:
       return {
@@ -93,11 +92,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         invisibleCards: [...action.payload],
       };
-    // case SEARCH:
-    //   return {
-    //     ...state,
-    //     data: action.data,
-    //   };
     case SET_ACTIVE:
       return {
         ...state,

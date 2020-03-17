@@ -136,7 +136,6 @@ export function sortEnum(chosenItems) {
   return (dispatch, getState) => {
     const state = getState();
     localStorage.setItem('reduxState', JSON.stringify(state));
-    // const items = chosenItems.map((obj) => obj.value);
     dispatch(sortingEnum(chosenItems));
   };
 }
