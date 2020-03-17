@@ -3,7 +3,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { fakeData } from '../../data/fakeDataGenerator';
 import {
-  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM, SEARCH, SET_ACTIVE, SET_DELETED,
+  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM, SEARCH, SET_ACTIVE, SET_DELETED, DELETE_ROWS,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -17,17 +17,22 @@ const initialState = {
     currency: faSort,
     amount: faSort,
   },
-  // activeRows: new Set(),
-  // deletedRows: new Set(),
   activeRows: [],
   deletedRows: [],
+  invisibleColumns: ['gender'],
+  // 'Name', 'Gender', 'Date of Birth', 'Address', 'Bank', 'Currency', 'Balance', 'Card', 'Status',
   search: '',
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case DELETE_ROWS:
+      return {
+        ...state,
+        deletedRows: [...state.deletedRows, ...state.activeRows],
+      };
     case 'TABLE_SEARCH':
-      return {...state, search: action.payload};
+      return { ...state, search: action.payload };
     case SORT:
       return {
         ...state,

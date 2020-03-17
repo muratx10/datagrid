@@ -12,6 +12,7 @@ const logger = (store) => action => next => {
   const result = action(next);
   console.log('---------STATE----------');
   console.log(store.getState());
+  localStorage.setItem('reduxState', JSON.stringify(store.getState()));
   return result;
 };
 const rootStore = createStore(rootReducer, compose(applyMiddleware(thunk, logger), DevTools.instrument()));

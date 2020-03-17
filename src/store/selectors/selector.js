@@ -39,17 +39,39 @@ import { createSelector } from 'reselect';
 //   // }
 // };
 
-const showRows = (data, deletedRows) => {
+const filtersAndSort = (data, deletedRows) => {
   console.log('inside selector');
 
-  if (deletedRows.length === 0) return data;
-  return data.filter((row) => !deletedRows.includes(row.id));
+  if (deletedRows.length === 0 && localStorage.getItem('reduxState') === null) {
+    return data;
+  }
+  let newData = data.filter((row) => !deletedRows.includes(row.id));
+  const localState = JSON.parse(localStorage.getItem('reduxState'));
+  // console.log(localState.invisibleColumns);
+
+  // if (localState.invisibleColumns.length !== 0) {
+  //   newData = newData.map((row) => {
+  //     const clone = { ...row };
+  //     // localState.invisibleColumns.forEach((item) => { delete clone[item]; });
+  //     delete clone.gender;
+  //     console.log(clone); // invisible columns
+  //     return clone;
+  //   });
+  // }
+
+  return newData;
+  // return data.filter((row) => !deletedRows.includes(row.id));
+  // return data.map((row) => {
+  //   const clone = { ...row };
+  //   delete clone.card; // invisible columns
+  //   return clone;
+  // });
 };
 
 const rowsSelector = createSelector(
   (state) => state.data,
   (state) => state.deletedRows,
-  (data, deletedRows) => showRows(data, deletedRows)
+  (data, deletedRows) => filtersAndSort(data, deletedRows),
 );
 // const searchItem = (data, searchText) => {
 

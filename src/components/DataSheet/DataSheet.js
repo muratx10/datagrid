@@ -22,7 +22,7 @@ const dataToProps = (data) => data.map((item, idx) => {
 
   return (
     <RowComponent
-      key={item.name}
+      key={item.id}
       id={item.id}
       name={item.name}
       gender={item.gender}

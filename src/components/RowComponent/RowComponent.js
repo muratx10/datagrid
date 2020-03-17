@@ -11,6 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
 
+// const arr = ['card'];
 const RowComponent = ({
   id, name, gender, birthDate, city, zipcode, bankName, currency, amount, card, statusColor, statusBadge, isActive, setActiveRows, setDeletedRows,
 }) => {
