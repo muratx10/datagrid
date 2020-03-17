@@ -16,6 +16,7 @@ import {
 } from '../../store/actions/datasheet';
 import SearchField from '../Search';
 import { deleteSelectedRows, setInvisibleColumn } from '../../store/actions/app';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const exportCSV = (obj) => {
   const options = {
@@ -80,16 +81,11 @@ const App = ({
           </div>
         </Grid>
       </div>
-      <Typography variant="h2">
-        Data Grid
-      </Typography>
-      <Chip
-        className="ml-5"
-        color="default"
-        avatar={<Avatar>!</Avatar>}
-        label=" Ctrl + H to show Redux DevTools"
-      />
-      <MultiSelect />
+      <Tooltip title="CTRL+H to show Redux DevTools">
+        <Typography variant="h2" style={{ cursor: 'help' }}>
+          Data Grid
+        </Typography>
+      </Tooltip>
       <FormControlLabel
         control={(
           <Checkbox
@@ -116,8 +112,21 @@ const App = ({
         <DeleteIcon />
       </IconButton>
       <button onClick={() => exportCSV(data)}>Export</button>
-      <Grid item xs={12} sm={6} style={{ margin: '20px 0' }}>
-        <SearchField />
+      <Grid
+        container
+        direction="row"
+        item
+        spacing={2}
+        xs={12}
+        sm={6}
+        style={{ margin: '20px 0' }}
+      >
+        <Grid item xs={8}>
+          <SearchField />
+        </Grid>
+        <Grid item xs={4}>
+          <MultiSelect />
+        </Grid>
       </Grid>
     </Grid>
     <div style={{
