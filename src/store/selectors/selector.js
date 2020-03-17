@@ -39,7 +39,7 @@ import { createSelector } from 'reselect';
 //   // }
 // };
 
-const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards) => {
+const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards, search) => {
   console.log('inside selector');
 
   if (deletedRows.length === 0 && localStorage.getItem('reduxState') === null) {
@@ -61,6 +61,24 @@ const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards) => {
     newData = newData.filter((row) => !items.includes(row.card));
   }
 
+  if (search.length !== 0) {
+    try {
+      const searchRegex = new RegExp(search, 'i');
+      newData = newData.filter((row) => [
+        row.name,
+        row.birthDate,
+        row.amount,
+        row.bankName,
+        row.currency,
+        row.gender,
+        row.card,
+        row.locationName.city,
+        row.locationName.zipcode,
+      ].find((str) => searchRegex.test(str)));
+    } catch (e) {
+      return newData;
+    }
+  }
   // if (localState.invisibleColumns.length !== 0) { // only for exportCSV
   //   newData = newData.map((row) => {
   //     const clone = { ...row };
@@ -70,7 +88,6 @@ const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards) => {
   //     return clone;
   //   });
   // }
-
 
 
   return newData;
@@ -87,7 +104,8 @@ const rowsSelector = createSelector(
   (state) => state.deletedRows,
   (state) => state.showActiveOnly,
   (state) => state.invisibleCards,
-  (data, deletedRows, showActiveOnly, invisibleCards) => filtersAndSort(data, deletedRows, showActiveOnly, invisibleCards),
+  (state) => state.search,
+  (data, deletedRows, showActiveOnly, invisibleCards, search) => filtersAndSort(data, deletedRows, showActiveOnly, invisibleCards, search),
 );
 // const searchItem = (data, searchText) => {
 
