@@ -6,6 +6,11 @@ import {
   Container,
   Row,
 } from 'react-bootstrap';
+import {
+  faArrowDown,
+  faArrowUp,
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { sort } from '../../store/actions/datasheet';
@@ -67,7 +72,7 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({ event, field: 'currency' })}
+          onClick={(event) => sorting({ event, field: 'currency' })}
         >
           <FontAwesomeIcon icon={icon1} />
         </Badge>
@@ -79,7 +84,7 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({ event, field: 'amount' })}
+          onClick={(event) => sorting({ event, field: 'amount' })}
         >
           <FontAwesomeIcon icon={icon2} />
         </Badge>
@@ -117,7 +122,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    sorting: (field) => dispatch(sort(field)),
+    sorting: (obj) => dispatch(sort(obj)),
   };
 }
 

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+const _ = require('lodash');
 // const _ = require('lodash');
 
 // export const getFilteredRows = (students, search) => {
@@ -39,7 +40,7 @@ import { createSelector } from 'reselect';
 //   // }
 // };
 
-const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards, search) => {
+const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards, search, sort1, sort2) => {
   console.log('inside selector');
 
   if (deletedRows.length === 0 && localStorage.getItem('reduxState') === null) {
@@ -79,6 +80,14 @@ const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards, searc
       return newData;
     }
   }
+
+  if (sort1[1] !== '') {
+    if (sort2[1] !== '') {
+      newData = _.orderBy(newData, [sort1[0], sort2[0]], [sort1[1], sort2[1]]);
+    } else {
+      newData = _.orderBy(newData, [sort1[0]], [sort1[1]]);
+    }
+  }
   // if (localState.invisibleColumns.length !== 0) { // only for exportCSV
   //   newData = newData.map((row) => {
   //     const clone = { ...row };
@@ -105,7 +114,9 @@ const rowsSelector = createSelector(
   (state) => state.showActiveOnly,
   (state) => state.invisibleCards,
   (state) => state.search,
-  (data, deletedRows, showActiveOnly, invisibleCards, search) => filtersAndSort(data, deletedRows, showActiveOnly, invisibleCards, search),
+  (state) => state.sort1,
+  (state) => state.sort2,
+  (data, deletedRows, showActiveOnly, invisibleCards, search, sort1, sort2) => filtersAndSort(data, deletedRows, showActiveOnly, invisibleCards, search, sort1, sort2),
 );
 // const searchItem = (data, searchText) => {
 
