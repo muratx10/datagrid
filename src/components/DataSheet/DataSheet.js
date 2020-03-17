@@ -6,6 +6,11 @@ import {
   Container,
   Row,
 } from 'react-bootstrap';
+import {
+  faArrowDown,
+  faArrowUp,
+  faSort,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { sort } from '../../store/actions/datasheet';
@@ -37,7 +42,7 @@ const dataToProps = (data) => data.map((item, idx) => {
 });
 
 const DataSheet = ({
-  sorting, data, icon1, icon2, invisibleColumns, turboMode
+  sorting, data, icon1, icon2, invisibleColumns, turboMode,
 }) => (
   <Container fluid>
     <Row className="header">
@@ -49,7 +54,8 @@ const DataSheet = ({
       </Col>
       <Col
         className={invisibleColumns.includes('birthDate') ? 'invisible hCell' : 'hCell'}
-        xs={1}>
+        xs={1}
+      >
         Date of Birth
       </Col>
       <Col className="hCell" xs={2}>
@@ -57,7 +63,8 @@ const DataSheet = ({
       </Col>
       <Col
         className={invisibleColumns.includes('bankName') ? 'invisible hCell' : 'hCell'}
-        xs={1}>
+        xs={1}
+      >
         Bank
       </Col>
       <Col className="hCell" xs={2}>
@@ -67,9 +74,10 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({
+
+          onClick={(event) => sorting({
             event,
-            field: 'currency'
+            field: 'currency',
           })}
         >
           <FontAwesomeIcon icon={icon1} />
@@ -82,9 +90,10 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({
+
+          onClick={(event) => sorting({
             event,
-            field: 'amount'
+            field: 'amount',
           })}
         >
           <FontAwesomeIcon icon={icon2} />
@@ -129,7 +138,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    sorting: (field) => dispatch(sort(field)),
+    sorting: (obj) => dispatch(sort(obj)),
   };
 }
 
