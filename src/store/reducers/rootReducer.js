@@ -3,7 +3,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { fakeData } from '../../data/fakeDataGenerator';
 import {
-  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM, SEARCH, SET_ACTIVE, SET_DELETED, DELETE_ROWS, SET_INVISIBLE,
+  SORT,
+  SET_CLICKED,
+  RESET_SORT_TYPE,
+  ACTIVE_USERS,
+  SORTING_ENUM,
+  SET_ACTIVE,
+  SET_DELETED,
+  DELETE_ROWS,
+  SET_INVISIBLE,
+  TURBO_MODE,
+  SEARCH,
 } from '../actions/actionTypes';
 
 // let initialState = {};
@@ -29,6 +39,7 @@ const initialState = localStorage.getItem('reduxState')
     invisibleColumns: [],
     // 'Name', 'Gender', 'Date of Birth', 'Address', 'Bank', 'Currency', 'Balance', 'Card', 'Status',
     search: '',
+    turboMode: true,
   };
 // }
 const rootReducer = (state = initialState, action) => {
@@ -68,13 +79,17 @@ const rootReducer = (state = initialState, action) => {
           currency: faSort,
           amount: faSort,
         },
-        // data: fakeData,
       };
     case ACTIVE_USERS:
       return {
         ...state,
         showActiveOnly: action.payload,
         // data: action.data || fakeData,
+      };
+    case TURBO_MODE:
+      return {
+        ...state,
+        isTurboModeOn: action.isTurboModeOn,
       };
     case SORTING_ENUM:
       return {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { FixedSizeList as List } from 'react-window';
-import _ from 'lodash';
 import {
   Badge,
   Col,
@@ -104,7 +103,6 @@ const DataSheet = ({
     </List>
   </Container>
 );
-
 
 function mapStateToProps(state) {
   return {

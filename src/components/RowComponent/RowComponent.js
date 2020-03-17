@@ -12,7 +12,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
 import './RowComponent.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
-import { fakeData } from '../../data/fakeDataGenerator';
 
 const RowComponent = ({
   setActiveRows,
@@ -34,15 +33,25 @@ const RowComponent = ({
     setActiveRow(!activeRow);
     setActiveRows(data[index].id);
   };
+  const currency = data[index].currency === 'Codes specifically reserved for'
+  + ' testing purposes' ? 'Euro' : data[index].currency;
   return (
-    <Row className="align-items-center row-item" id={data[index].id} style={style} key={data[index].id}>
+    <Row
+      className="align-items-center row-item"
+      id={data[index].id}
+      style={style}
+      key={key}
+    >
       <Col className="cell fixedCol fixedCol" xs={2} style={isActiveStyle}>
         <Checkbox
           id={idx}
           color="primary"
           onChange={chooseRow}
         />
-        <IconButton aria-label="delete" onClick={() => setDeletedRows(data[index].id)}>
+        <IconButton
+          aria-label="delete"
+          onClick={() => setDeletedRows(data[index].id)}
+        >
           <DeleteIcon />
         </IconButton>
         <Badge variant="secondary">
@@ -66,7 +75,7 @@ const RowComponent = ({
         {data[index].bankName}
       </Col>
       <Col xs={2} className="cell" style={isActiveStyle}>
-        {data[index].currency}
+        {currency}
       </Col>
       <Col xs={1} className="cell text-right" style={isActiveStyle}>
         {data[index].amount}
@@ -86,6 +95,7 @@ const RowComponent = ({
 
 function mapStateToProps(state) {
   return {
+    turboMode: state.isTurboModeOn,
     invisibleColumns: state.invisibleColumns,
   };
 }

@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './store/reducers/rootReducer';
 import App from './components/App';
 import DevTools from './components/reduxDevTool/reduxDevTool';
+import './index.scss';
 
 // eslint-disable-next-line max-len
 const logger = (store) => action => next => {
