@@ -36,7 +36,7 @@ const exportCSV = (obj) => {
 };
 
 const App = ({
-  toggleActiveUsers, deleteRows, data, hideColumn, invisibleColumns, setTurboMode
+  toggleActive, deleteRows, data, hideColumn, invisibleColumns, setTurboMode,
 }) => (
   <>
     <Grid
@@ -56,13 +56,16 @@ const App = ({
           direction="column"
         >
           <div>
-            <Switch color="primary"
-                    onChange={(e) => toggleActiveUsers(e.target.checked)} />
+            <Switch
+              color="primary"
+              onChange={toggleActive}
+            />
             <Chip color="default" label="ACTIVE members only" />
           </div>
           <div>
-            <Switch color="primary"
-                    onChange={(e) => setTurboMode(e.target.checked)}
+            <Switch
+              color="primary"
+              onChange={(e) => setTurboMode(e.target.checked)}
             />
             <Chip color="default" label="TURBO mode ON" />
           </div>
@@ -118,7 +121,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
+  toggleActive: () => dispatch(toggleActiveUsers()),
   setTurboMode: (isTurboModeOn) => dispatch(setTurboMode(isTurboModeOn)),
   deleteRows: () => dispatch(deleteSelectedRows()),
   hideColumn: (id) => dispatch(setInvisibleColumn(id)),

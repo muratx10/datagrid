@@ -36,23 +36,31 @@ export function resetSortType() {
   };
 }
 
-export function setActiveUsers(isActive, data) {
+function setActiveUsers(str) {
   return {
     type: ACTIVE_USERS,
-    isActive,
-    data,
+    payload: str,
   };
 }
 
-export function toggleActiveUsers(isActive) {
+export function toggleActiveUsers() {
   return (dispatch, getState) => {
-    const { data } = getState();
-    if (isActive) {
-      const activeUsers = _.filter(data, 'isActive');
-      dispatch(setActiveUsers(isActive, activeUsers));
+    const state = getState();
+    localStorage.setItem('reduxState', JSON.stringify(state));
+    const { showActiveOnly } = getState();
+    if (showActiveOnly === 'no') {
+      dispatch(setActiveUsers('yes'));
     } else {
-      dispatch(setActiveUsers(isActive));
+      dispatch(setActiveUsers('no'));
     }
+  // const { data } = getState();
+  // if (isActive) {
+  //   const activeUsers = _.filter(data, 'isActive');
+  //   dispatch(setActiveUsers(isActive, activeUsers));
+  // } else {
+  //   dispatch(setActiveUsers(isActive));
+  // }
+  // };
   };
 }
 
