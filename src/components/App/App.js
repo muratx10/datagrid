@@ -64,7 +64,7 @@ const App = ({ toggleActiveUsers, deleteRows, data }) => (
       </IconButton>
       <button onClick={() => exportCSV(data)}>Export</button>
       <Grid item xs={12} sm={6} style={{ margin: '20px 0' }}>
-        <SearchField />
+        <SearchField onInputChange={(e) => filterData(e.target.value)} />
       </Grid>
     </Grid>
     <DataSheet style={{ overflowX: 'scroll' }} />
