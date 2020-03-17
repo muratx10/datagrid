@@ -28,7 +28,7 @@ const RowComponent = ({
     setActiveRow(!activeRow);
     setActiveRows(event.target.id);
   };
-  const idx = toString(data[index].id);
+  const idx = data[index].id.toString();
   const currency = data[index].currency === 'Codes specifically reserved for'
   + ' testing purposes' ? 'Euro' : data[index].currency;
   return (
