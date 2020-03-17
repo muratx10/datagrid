@@ -1,33 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-
-import { sortEnum } from '../../store/actions/datasheet';
+import setInvisibleColumns from '../../store/actions/columnmultiseelect';
 
 const options = [
   {
-    value: 'Visa',
-    label: 'Visa',
+    value: 'birthDate',
+    label: 'Birth Date',
   },
   {
-    value: 'Mastercard',
-    label: 'Mastercard',
-  },
-  {
-    value: 'Maestro',
-    label: 'Maestro',
-  },
+    value: 'bankName',
+    label: 'Bank',
+  }
 ];
 
-const Multiselect = ({ sort }) => ( //
+const Multiselect = ({ hideColumn }) => ( //
   <Select
-    defaultValue={options}
+    defaultValue={null}
     isMulti
     name="multiselect"
     options={options}
     className="basic-multi-select"
     classNamePrefix="select"
-    onChange={sort}
+    onChange={hideColumn}
     styles={{
       menu: (provided) => ({ ...provided, zIndex: 9999 }),
       container: () => ({
@@ -38,13 +33,8 @@ const Multiselect = ({ sort }) => ( //
   />
 );
 
-// const mapStateToProps = (state) => ({
-//   showActiveUsers: state.showActiveUsers,
-//   data: state.data,
-// });
-
 const mapDispatchToProps = (dispatch) => ({
-  sort: (chosenItems) => dispatch(sortEnum(chosenItems)),
+  hideColumn: (chosenItems) => dispatch(setInvisibleColumns(chosenItems)),
 });
 
 export default connect(null, mapDispatchToProps)(Multiselect);

@@ -12,7 +12,8 @@ import Multiselect from '../Multiselect/Multiselect';
 import DataSheet from '../DataSheet';
 import { toggleActiveUsers } from '../../store/actions/datasheet';
 import SearchField from '../Search';
-import deleteSelectedRows from '../../store/actions/app';
+import { deleteSelectedRows, setInvisibleColumn } from '../../store/actions/app';
+// import ColumnMultiselect from '../Multiselect/ColumnMultiselect';
 
 const exportCSV = (obj) => {
   const options = {
@@ -32,7 +33,7 @@ const exportCSV = (obj) => {
   csvExporter.generateCsv(obj);
 };
 
-const App = ({ toggleActiveUsers, deleteRows, data }) => (
+const App = ({ toggleActiveUsers, deleteRows, data, hideColumn }) => (
   <>
     <Grid
       container
@@ -59,6 +60,9 @@ const App = ({ toggleActiveUsers, deleteRows, data }) => (
         label=" Ctrl + H to show Redux DevTools"
       />
       <Multiselect />
+      <input type="checkbox" name="birthDate" id="birthDate" onChange={(event) => hideColumn(event.target.id)} />
+      <input type="checkbox" name="bankName" id="bankName" onChange={(event) => hideColumn(event.target.id)} />
+      {/* <ColumnMultiselect /> */}
       <IconButton aria-label="delete" onClick={deleteRows}>
         <DeleteIcon />
       </IconButton>
@@ -78,6 +82,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
   deleteRows: () => dispatch(deleteSelectedRows()),
+  hideColumn: (id) => dispatch(setInvisibleColumn(id)),
 });
 
 

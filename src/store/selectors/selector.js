@@ -45,11 +45,14 @@ const filtersAndSort = (data, deletedRows) => {
   if (deletedRows.length === 0 && localStorage.getItem('reduxState') === null) {
     return data;
   }
-  let newData = data.filter((row) => !deletedRows.includes(row.id));
+  let newData = [...data];
   const localState = JSON.parse(localStorage.getItem('reduxState'));
-  // console.log(localState.invisibleColumns);
 
-  // if (localState.invisibleColumns.length !== 0) {
+  if (localState.deletedRows.length !== 0) {
+    newData = newData.filter((row) => !deletedRows.includes(row.id));
+  }
+
+  // if (localState.invisibleColumns.length !== 0) { // only for exportCSV
   //   newData = newData.map((row) => {
   //     const clone = { ...row };
   //     // localState.invisibleColumns.forEach((item) => { delete clone[item]; });
@@ -58,6 +61,8 @@ const filtersAndSort = (data, deletedRows) => {
   //     return clone;
   //   });
   // }
+
+
 
   return newData;
   // return data.filter((row) => !deletedRows.includes(row.id));
