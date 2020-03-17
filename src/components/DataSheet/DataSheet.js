@@ -37,7 +37,7 @@ const dataToProps = (data) => data.map((item, idx) => {
 });
 
 const DataSheet = ({
-  sorting, data, icon1, icon2, invisibleColumns,
+  sorting, data, icon1, icon2, invisibleColumns, turboMode
 }) => (
   <Container fluid>
     <Row className="header">
@@ -47,13 +47,17 @@ const DataSheet = ({
       <Col className="hCell" xs={1}>
         Gender
       </Col>
-      <Col className={invisibleColumns.includes('birthDate') ? 'invisible hCell' : 'hCell'} xs={1}>
+      <Col
+        className={invisibleColumns.includes('birthDate') ? 'invisible hCell' : 'hCell'}
+        xs={1}>
         Date of Birth
       </Col>
       <Col className="hCell" xs={2}>
         Address
       </Col>
-      <Col className={invisibleColumns.includes('bankName') ? 'invisible hCell' : 'hCell'} xs={1}>
+      <Col
+        className={invisibleColumns.includes('bankName') ? 'invisible hCell' : 'hCell'}
+        xs={1}>
         Bank
       </Col>
       <Col className="hCell" xs={2}>
@@ -63,7 +67,10 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({ event, field: 'currency' })}
+          onClick={() => sorting({
+            event,
+            field: 'currency'
+          })}
         >
           <FontAwesomeIcon icon={icon1} />
         </Badge>
@@ -75,7 +82,10 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({ event, field: 'amount' })}
+          onClick={() => sorting({
+            event,
+            field: 'amount'
+          })}
         >
           <FontAwesomeIcon icon={icon2} />
         </Badge>
@@ -87,17 +97,21 @@ const DataSheet = ({
         Status
       </Col>
     </Row>
-    <List
-      height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
-      width={1700}
-      itemSize={40}
-      itemCount={data.length}
-      itemData={data}
-      itemKey={_.uniqueId}
-    >
-      {RowComponent}
-    </List>
-    {/*{dataToProps(data)}*/}
+    {
+      turboMode ? (
+        <List
+          height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
+          width={1700}
+          itemSize={40}
+          itemCount={data.length}
+          itemData={data}
+          itemKey={_.uniqueId}
+        >
+          {RowComponent}
+        </List>
+      )
+        : dataToProps(data)
+    }
   </Container>
 );
 
@@ -109,6 +123,7 @@ function mapStateToProps(state) {
     icon1: state.icon.currency,
     icon2: state.icon.amount,
     invisibleColumns: state.invisibleColumns,
+    turboMode: state.isTurboModeOn,
   };
 }
 
