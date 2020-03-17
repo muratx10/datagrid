@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Typography, Chip, Avatar, Grid, Switch,
+  Typography, Chip, Avatar, Grid, Switch, Checkbox, FormControlLabel,
 } from '@material-ui/core';
 import './App.scss';
 import IconButton from '@material-ui/core/IconButton';
@@ -33,7 +33,9 @@ const exportCSV = (obj) => {
   csvExporter.generateCsv(obj);
 };
 
-const App = ({ toggleActiveUsers, deleteRows, data, hideColumn }) => (
+const App = ({
+  toggleActiveUsers, deleteRows, data, hideColumn, invisibleColumns,
+}) => (
   <>
     <Grid
       container
@@ -60,9 +62,28 @@ const App = ({ toggleActiveUsers, deleteRows, data, hideColumn }) => (
         label=" Ctrl + H to show Redux DevTools"
       />
       <Multiselect />
-      <input type="checkbox" name="birthDate" id="birthDate" onChange={(event) => hideColumn(event.target.id)} />
-      <input type="checkbox" name="bankName" id="bankName" onChange={(event) => hideColumn(event.target.id)} />
-      {/* <ColumnMultiselect /> */}
+      <FormControlLabel
+        control={(
+          <Checkbox
+            id="birthDate"
+            color="primary"
+            checked={!!invisibleColumns.includes('birthDate')}
+            onChange={(event) => hideColumn(event.target.id)}
+          />
+      )}
+        label="Hide Birth Date"
+      />
+      <FormControlLabel
+        control={(
+          <Checkbox
+            id="bankName"
+            color="primary"
+            checked={!!invisibleColumns.includes('bankName')}
+            onChange={(event) => hideColumn(event.target.id)}
+          />
+      )}
+        label="Hide Bank"
+      />
       <IconButton aria-label="delete" onClick={deleteRows}>
         <DeleteIcon />
       </IconButton>
@@ -77,6 +98,7 @@ const App = ({ toggleActiveUsers, deleteRows, data, hideColumn }) => (
 
 const mapStateToProps = (state) => ({
   data: state.data,
+  invisibleColumns: state.invisibleColumns,
 });
 
 const mapDispatchToProps = (dispatch) => ({
