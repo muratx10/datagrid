@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 
 import { sortEnum } from '../../store/actions/datasheet';
-// import { colourOptions } from './docs/data';
+
 const options = [
   {
     value: 'Visa',
@@ -19,12 +19,7 @@ const options = [
   },
 ];
 
-// function sortEnum(val) {
-//   console.log(val);
-
-// }
-
-const Multiselect = ({ sort }) => ( //
+const MultiSelect = ({ sort }) => ( //
   <Select
     defaultValue={options}
     isMulti
@@ -52,4 +47,4 @@ const mapDispatchToProps = (dispatch) => ({
   sort: (chosenItems) => dispatch(sortEnum(chosenItems)),
 });
 
-export default connect(null, mapDispatchToProps)(Multiselect);
+export default connect(null, mapDispatchToProps)(MultiSelect);
