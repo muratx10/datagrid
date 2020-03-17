@@ -11,8 +11,6 @@ import './index.scss';
 // eslint-disable-next-line max-len
 const logger = (store) => action => next => {
   const result = action(next);
-  console.log('---------STATE----------');
-  console.log(store.getState());
   localStorage.setItem('reduxState', JSON.stringify(store.getState()));
   return result;
 };

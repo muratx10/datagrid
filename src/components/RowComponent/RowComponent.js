@@ -12,9 +12,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
 import './RowComponent.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
-import visa from '../../assets/visa.png';
-import mastercard from '../../assets/mastercard.svg.png';
-import maestro from '../../assets/maestro.svg.png';
 
 const RowComponent = ({
   setActiveRows,

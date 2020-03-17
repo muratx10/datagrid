@@ -17,8 +17,10 @@ import {
 import SearchField from '../Search';
 import { deleteSelectedRows, setInvisibleColumn } from '../../store/actions/app';
 import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
+import rowsSelector from '../../store/selectors/selector';
 
-const exportCSV = (obj) => {
+const exportCSV = (obj, invisibleColumns) => {
   const options = {
     fieldSeparator: ',',
     quoteStrings: '"',
@@ -32,8 +34,15 @@ const exportCSV = (obj) => {
   };
 
   const csvExporter = new ExportToCsv(options);
-
-  csvExporter.generateCsv(obj);
+  let newData = [...obj];
+  if (invisibleColumns.length !== 0) { // only for exportCSV
+    newData = newData.map((row) => {
+      const clone = { ...row };
+      invisibleColumns.forEach((item) => { delete clone[item]; });
+      return clone;
+    });
+  }
+  csvExporter.generateCsv(newData);
 };
 
 const App = ({
@@ -100,18 +109,24 @@ const App = ({
       <FormControlLabel
         control={(
           <Checkbox
-            id="bankName"
+            id="companyName"
             color="primary"
-            checked={!!invisibleColumns.includes('bankName')}
+            checked={!!invisibleColumns.includes('companyName')}
             onChange={(event) => hideColumn(event.target.id)}
           />
       )}
-        label="Hide Bank"
+        label="Hide Company"
       />
       <IconButton aria-label="delete" onClick={deleteRows}>
         <DeleteIcon />
       </IconButton>
-      <button onClick={() => exportCSV(data)}>Export</button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => exportCSV(data, invisibleColumns)}
+      >
+        Export to CVS
+      </Button>
       <Grid
         container
         direction="row"
@@ -144,7 +159,7 @@ const App = ({
 );
 
 const mapStateToProps = (state) => ({
-  data: state.data,
+  data: rowsSelector(state),
   invisibleColumns: state.invisibleColumns,
   showActiveOnly: state.showActiveOnly,
   turboMode: state.isTurboModeOn,
