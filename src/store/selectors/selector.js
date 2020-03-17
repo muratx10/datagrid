@@ -88,8 +88,6 @@ const filtersAndSort = (data, deletedRows, showActiveOnly, invisibleCards, searc
   //     return clone;
   //   });
   // }
-
-
   return newData;
   // return data.filter((row) => !deletedRows.includes(row.id));
   // return data.map((row) => {

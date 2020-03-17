@@ -12,36 +12,32 @@ import { sort } from '../../store/actions/datasheet';
 import './DataSheet.scss';
 import RowComponent from '../RowComponent/RowComponent';
 import rowsSelector from '../../store/selectors/selector';
+import RowComponentNoVirtual from '../RowComponent/RowComponentNoVirtual';
 
-// const dataToProps = (data) => data.map((item, idx) => {
-//   const statusColor = item.isActive ? 'active' : 'locked';
-//   const statusBadge = item.isActive ? 'success' : 'danger';
-//   // Fix currency name when faker.js generating name as 'Codes specifically reserved for testing purposes'
-//   const currency = item.currency === 'Codes specifically reserved for'
-//   + ' testing purposes' ? 'Euro' : item.currency;
-//
-//   return (
-//     <RowComponent
-//       key={item.id}
-//       id={item.id}
-//       name={item.name}
-//       gender={item.gender}
-//       birthDate={item.birthDate}
-//       city={item.locationName.city}
-//       zipcode={item.locationName.zipcode}
-//       bankName={item.bankName}
-//       currency={currency}
-//       amount={item.amount}
-//       card={item.card}
-//       statusColor={statusColor}
-//       statusBadge={statusBadge}
-//       isActive={item.isActive}
-//     />
-//   );
-// });
+const dataToProps = (data) => data.map((item, idx) => {
+  const currency = item.currency === 'Codes specifically reserved for'
+  + ' testing purposes' ? 'Euro' : item.currency;
+
+  return (
+    <RowComponentNoVirtual
+      key={item.id}
+      id={item.id}
+      name={item.name}
+      gender={item.gender}
+      birthDate={item.birthDate}
+      city={item.locationName.city}
+      zipcode={item.locationName.zipcode}
+      bankName={item.bankName}
+      currency={currency}
+      amount={item.amount}
+      card={item.card}
+      isActive={item.isActive}
+    />
+  );
+});
 
 const DataSheet = ({
-  sorting, data, icon1, icon2, invisibleColumns,
+  sorting, data, icon1, icon2, invisibleColumns, turboMode
 }) => (
   <Container fluid>
     <Row className="header">
@@ -51,13 +47,17 @@ const DataSheet = ({
       <Col className="hCell" xs={1}>
         Gender
       </Col>
-      <Col className={invisibleColumns.includes('birthDate') ? 'invisible hCell' : 'hCell'} xs={1}>
+      <Col
+        className={invisibleColumns.includes('birthDate') ? 'invisible hCell' : 'hCell'}
+        xs={1}>
         Date of Birth
       </Col>
       <Col className="hCell" xs={2}>
         Address
       </Col>
-      <Col className={invisibleColumns.includes('bankName') ? 'invisible hCell' : 'hCell'} xs={1}>
+      <Col
+        className={invisibleColumns.includes('bankName') ? 'invisible hCell' : 'hCell'}
+        xs={1}>
         Bank
       </Col>
       <Col className="hCell" xs={2}>
@@ -67,7 +67,10 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({ event, field: 'currency' })}
+          onClick={() => sorting({
+            event,
+            field: 'currency'
+          })}
         >
           <FontAwesomeIcon icon={icon1} />
         </Badge>
@@ -79,7 +82,10 @@ const DataSheet = ({
         <Badge
           className="button"
           variant="secondary"
-          onClick={() => sorting({ event, field: 'amount' })}
+          onClick={() => sorting({
+            event,
+            field: 'amount'
+          })}
         >
           <FontAwesomeIcon icon={icon2} />
         </Badge>
@@ -91,16 +97,21 @@ const DataSheet = ({
         Status
       </Col>
     </Row>
-    <List
-      height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
-      width={1700}
-      itemSize={40}
-      itemCount={data.length}
-      itemData={data}
-      itemKey={_.uniqueId}
-    >
-      {RowComponent}
-    </List>
+    {
+      turboMode ? (
+        <List
+          height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
+          width={1700}
+          itemSize={40}
+          itemCount={data.length}
+          itemData={data}
+          itemKey={_.uniqueId}
+        >
+          {RowComponent}
+        </List>
+      )
+        : dataToProps(data)
+    }
   </Container>
 );
 
@@ -112,6 +123,7 @@ function mapStateToProps(state) {
     icon1: state.icon.currency,
     icon2: state.icon.amount,
     invisibleColumns: state.invisibleColumns,
+    turboMode: state.isTurboModeOn,
   };
 }
 
