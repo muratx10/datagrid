@@ -1,6 +1,5 @@
 import React from 'react';
 import { FixedSizeList as List } from 'react-window';
-import _ from 'lodash';
 import {
   Badge,
   Col,
@@ -41,9 +40,8 @@ import rowsSelector from '../../store/selectors/selector';
 //   );
 // });
 
-
 const DataSheet = ({
-  sorting, data, icon1, icon2,
+  sorting, data, icon1, icon2
 }) => {
   return (
     <Container fluid>
@@ -98,6 +96,7 @@ const DataSheet = ({
         height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
         width={1700}
         itemSize={40}
+        overscanCount={10}
         itemCount={data.length}
         itemData={data}
         itemKey={_.uniqueId}

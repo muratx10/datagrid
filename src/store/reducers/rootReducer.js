@@ -3,7 +3,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { fakeData } from '../../data/fakeDataGenerator';
 import {
-  SORT, SET_CLICKED, RESET_SORT_TYPE, ACTIVE_USERS, SORTING_ENUM, SEARCH, SET_ACTIVE, SET_DELETED,
+  SORT,
+  SET_CLICKED,
+  RESET_SORT_TYPE,
+  ACTIVE_USERS,
+  SORTING_ENUM,
+  SEARCH,
+  SET_ACTIVE,
+  SET_DELETED,
+  TURBO_MODE,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -22,6 +30,7 @@ const initialState = {
   activeRows: [],
   deletedRows: [],
   search: '',
+  isTurboModeOn: true,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -58,6 +67,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         showActiveUsers: action.isActive,
         data: action.data || fakeData,
+      };
+    case TURBO_MODE:
+      return {
+        ...state,
+        isTurboModeOn: action.isTurboModeOn,
       };
     case SORTING_ENUM:
       return {

@@ -7,10 +7,13 @@ import {
 import './App.scss';
 import Multiselect from '../Multiselect/Multiselect';
 import DataSheet from '../DataSheet';
-import { toggleActiveUsers } from '../../store/actions/datasheet';
+import {
+  setTurboMode,
+  toggleActiveUsers,
+} from '../../store/actions/datasheet';
 import SearchField from '../Search';
 
-const App = ({ toggleActiveUsers }) => (
+const App = ({ toggleActiveUsers, setTurboMode }) => (
   <>
     <Grid
       container
@@ -24,8 +27,22 @@ const App = ({ toggleActiveUsers }) => (
       }}
     >
       <div>
-        <Switch color="primary" onChange={(e) => toggleActiveUsers(e.target.checked)} />
-        <Chip color="default" label="ACTIVE members only" />
+        <Grid
+          container
+          direction="column"
+        >
+          <div>
+            <Switch color="primary"
+                    onChange={(e) => toggleActiveUsers(e.target.checked)} />
+            <Chip color="default" label="ACTIVE members only" />
+          </div>
+          <div>
+            <Switch color="primary"
+                    onChange={(e) => setTurboMode(e.target.checked)}
+            />
+            <Chip color="default" label="TURBO mode ON" />
+          </div>
+        </Grid>
       </div>
       <Typography variant="h2">
         Data Grid
@@ -48,6 +65,7 @@ const App = ({ toggleActiveUsers }) => (
 
 const mapDispatchToProps = (dispatch) => ({
   toggleActiveUsers: (isActive) => dispatch(toggleActiveUsers(isActive)),
+  setTurboMode: (isTurboModeOn) => dispatch(setTurboMode(isTurboModeOn)),
 });
 
 
