@@ -126,9 +126,14 @@ const App = ({
         )}
         label="Hide Company"
       />
-      <IconButton aria-label="delete" onClick={deleteRows}>
+      <Button
+        onClick={deleteRows}
+        variant="contained"
+        color="primary"
+      >
         <DeleteIcon />
-      </IconButton>
+        Remove selected rows &nbsp;&nbsp;
+      </Button>
       <Button
         variant="contained"
         color="primary"
