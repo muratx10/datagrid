@@ -42,7 +42,7 @@ const dataToProps = (data) => data.map((item, idx) => {
 });
 
 const DataSheet = ({
-  sorting, data, icon1, icon2, invisibleColumns, turboMode, sort1, sort2
+  sorting, data, icon1, icon2, invisibleColumns, turboMode, sort1, sort2, activeRows,
 }) => {
   const iconGen = (field) => {
     if (sort1[0] === field) {
@@ -70,7 +70,23 @@ const DataSheet = ({
   return (
     <Container fluid>
       <Row className="header">
-        <Col className="fixedColHeader hCell fixedCol" xs={2}>
+        <Col
+          className="fixedColHeader hCell fixedCol"
+          xs={2}
+          style={{ position: 'relative' }}
+        >
+          <Badge
+            pill
+            className="selectedItemCounter"
+            style={{
+              position: 'absolute',
+              left: '20px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+            }}
+          >
+            {activeRows.length === 0 ? '' : activeRows.length}
+          </Badge>
           Name
         </Col>
         <Col className="hCell" xs={1}>
@@ -88,7 +104,8 @@ const DataSheet = ({
         <Col
           className={invisibleColumns.includes('companyName') ? 'invisible'
             + ' hCell' : 'hCell'}
-          xs={1}>
+          xs={1}
+        >
           Company
         </Col>
         <Col className="hCell" xs={2}>
@@ -132,16 +149,16 @@ const DataSheet = ({
       </Row>
       {
         turboMode ? (
-            <List
-              height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
-              width={1900}
-              itemSize={40}
-              itemCount={data.length}
-              itemData={data}
-              itemKey={_.uniqueId}
-            >
-              {RowComponent}
-            </List>
+          <List
+            height={Math.max(document.documentElement.clientHeight, window.innerHeight || 0)}
+            width={1900}
+            itemSize={40}
+            itemCount={data.length}
+            itemData={data}
+            itemKey={_.uniqueId}
+          >
+            {RowComponent}
+          </List>
         )
           : dataToProps(data)
       }
@@ -161,6 +178,7 @@ function mapStateToProps(state) {
     turboMode: state.isTurboModeOn,
     sort1: state.sort1,
     sort2: state.sort2,
+    activeRows: state.activeRows,
   };
 }
 

@@ -2,12 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Typography, Chip, Avatar, Grid, Switch, Checkbox, FormControlLabel,
+  Typography,
+  Chip,
+  Grid,
+  Switch,
+  Checkbox,
+  FormControlLabel,
+  Tooltip,
+  Button,
 } from '@material-ui/core';
 import './App.scss';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ExportToCsv } from 'export-to-csv';
+import Badge from 'react-bootstrap/Badge';
 import MultiSelect from '../MultiSelect/MultiSelect';
 import DataSheet from '../DataSheet';
 import {
@@ -15,9 +23,10 @@ import {
   toggleActiveUsers,
 } from '../../store/actions/datasheet';
 import SearchField from '../Search';
-import { deleteSelectedRows, setInvisibleColumn } from '../../store/actions/app';
-import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
+import {
+  deleteSelectedRows,
+  setInvisibleColumn
+} from '../../store/actions/app';
 import rowsSelector from '../../store/selectors/selector';
 
 const exportCSV = (obj, invisibleColumns) => {
@@ -86,7 +95,7 @@ const App = ({
               checked={!!turboMode}
               onChange={(e) => setTurboMode(e.target.checked)}
             />
-            <Chip color="default" label="TURBO mode ON" />
+            <Chip color="default" label="Data Virtualization mode" />
           </div>
         </Grid>
       </div>
@@ -103,7 +112,7 @@ const App = ({
             checked={!!invisibleColumns.includes('birthDate')}
             onChange={(event) => hideColumn(event.target.id)}
           />
-      )}
+        )}
         label="Hide Birth Date"
       />
       <FormControlLabel
@@ -114,7 +123,7 @@ const App = ({
             checked={!!invisibleColumns.includes('companyName')}
             onChange={(event) => hideColumn(event.target.id)}
           />
-      )}
+        )}
         label="Hide Company"
       />
       <IconButton aria-label="delete" onClick={deleteRows}>
@@ -125,7 +134,7 @@ const App = ({
         color="primary"
         onClick={() => exportCSV(data, invisibleColumns)}
       >
-        Export to CVS
+        Export to CSV
       </Button>
       <Grid
         container
@@ -143,14 +152,31 @@ const App = ({
           <MultiSelect />
         </Grid>
       </Grid>
+      <h3 style={{
+        position: 'absolute',
+        top: '150px',
+        minWidth: '980px',
+        zIndex: 9999,
+        width: '90vw',
+      }}
+      >
+        <Badge
+          variant="primary"
+          className="countBadge"
+        >
+          Rows: {data.length}
+        </Badge>
+      </h3>
     </Grid>
     <div style={{
       width: '90vw',
       height: '75vh',
+      minWidth: '980px',
       overflow: 'scroll',
       margin: '0 auto',
       borderRadius: '5px',
       boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+      position: 'relative',
     }}
     >
       <DataSheet style={{ overflowX: 'scroll' }} />

@@ -12,6 +12,7 @@ import './index.scss';
 const logger = (store) => action => next => {
   const result = action(next);
   localStorage.setItem('reduxState', JSON.stringify(store.getState()));
+  console.log(store.getState());
   return result;
 };
 const rootStore = createStore(rootReducer, compose(applyMiddleware(thunk, logger), DevTools.instrument()));
