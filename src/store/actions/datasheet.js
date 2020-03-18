@@ -122,6 +122,6 @@ export function sortEnum(chosenItems) {
   return (dispatch, getState) => {
     const state = getState();
     localStorage.setItem('reduxState', JSON.stringify(state));
-    dispatch(sortingEnum(chosenItems));
+    dispatch(sortingEnum(chosenItems || []));
   };
 }
