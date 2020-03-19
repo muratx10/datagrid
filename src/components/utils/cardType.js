@@ -2,7 +2,7 @@ import FigureImage from 'react-bootstrap/FigureImage';
 import React from 'react';
 import visa from '../../assets/visa.png';
 import mastercard from '../../assets/mastercard.svg.png';
-import maestro from '../../assets/maestro.svg.png';
+import maestro from '../../assets/maestro.png';
 
 const cardImg = (type) => {
   switch (type) {
