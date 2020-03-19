@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
 import './RowComponent.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
+import cardImg from '../utils/cardType';
 
 const RowComponent = ({
   setActiveRows,
@@ -30,6 +31,7 @@ const RowComponent = ({
   };
   const currency = data[index].currency === 'Codes specifically reserved for'
   + ' testing purposes' ? 'Euro' : data[index].currency;
+
   return (
     <Row
       className={activeClass}
@@ -76,8 +78,8 @@ const RowComponent = ({
       <Col xs={1} className="cell text-right">
         {data[index].amount}
       </Col>
-      <Col xs={1} className="cell">
-        {data[index].card}
+      <Col xs={1} className="cell text-center">
+        {cardImg(data[index].card)}
       </Col>
       <Col className="cell text-center" xs={1}>
         <Badge variant={data[index].isActive ? 'success' : 'danger'}>

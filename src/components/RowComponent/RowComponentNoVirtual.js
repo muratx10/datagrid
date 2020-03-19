@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import '../DataSheet/DataSheet.scss';
 import './RowComponent.scss';
 import { setActiveRowId, deleteRow } from '../../store/actions/rowcomponent';
+import cardImg from '../utils/cardType';
 
 const RowComponentNoVirtual = ({
   id,
@@ -79,8 +80,8 @@ const RowComponentNoVirtual = ({
       <Col xs={1} className="cell text-right" style={isActiveStyle}>
         {amount}
       </Col>
-      <Col xs={1} className="cell" style={isActiveStyle}>
-        {card}
+      <Col xs={1} className="cell text-center" style={isActiveStyle}>
+        {cardImg(card)}
       </Col>
       <Col className="cell text-center" xs={1} style={isActiveStyle}>
         <Badge variant={isActive ? 'success' : 'danger'}>
