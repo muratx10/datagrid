@@ -8,7 +8,6 @@ const generateFakeData = (id) => ({
   id,
   name: faker.name.findName(),
   birthDate: moment(faker.date.past(20)).format('ll'),
-  startTime: faker.date.past(5).getTime(),
   companyName: `${faker.company.companyName()} LLC`.toUpperCase(),
   amount: Math.trunc(faker.finance.amount()),
   currency: faker.finance.currencyName(),

@@ -25,7 +25,7 @@ import {
 import SearchField from '../Search';
 import {
   deleteSelectedRows,
-  setInvisibleColumn
+  setInvisibleColumn,
 } from '../../store/actions/app';
 import rowsSelector from '../../store/selectors/selector';
 
@@ -44,20 +44,24 @@ const exportCSV = (obj, invisibleColumns) => {
 
   const csvExporter = new ExportToCsv(options);
   let newData = obj.map((i) => {
-    if (i.locationName) {
-      return {
-        ...i,
-        locationName: `${i.locationName.city} ${i.locationName.zipcode}`,
-      };
-    }
+    const location = `${i.locationName.city} ${i.locationName.zipcode}`;
+    const status = i.isActive === true ? 'ACTIVE' : 'LOCKED';
+    const residence = i.residence === true ? 'resident' : 'non-resident';
+    const birthDate = invisibleColumns.includes('birthDate') ? '' : i.birthDate;
+    const company = invisibleColumns.includes('companyName') ? '' : i.companyName;
+    return {
+      ID: i.id,
+      NAME: i.name,
+      RESIDENCE: residence,
+      'DATE OF BIRTH': birthDate,
+      ADDRESS: location,
+      COMPANY: company,
+      CURRENCY: i.currency,
+      BALANCE: i.amount,
+      CARD: i.card,
+      STATUS: status,
+    };
   });
-  if (invisibleColumns.length !== 0) { // only for exportCSV
-    newData = newData.map((row) => {
-      const clone = { ...row };
-      invisibleColumns.forEach((item) => { delete clone[item]; });
-      return clone;
-    });
-  }
   csvExporter.generateCsv(newData);
 };
 
@@ -176,7 +180,9 @@ const App = ({
           variant="primary"
           className="countBadge"
         >
-          Rows: {data.length}
+          Rows:
+          {' '}
+          {data.length}
         </Badge>
       </h3>
     </Grid>
