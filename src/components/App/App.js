@@ -29,26 +29,6 @@ import {
 } from '../../store/actions/app';
 import rowsSelector from '../../store/selectors/selector';
 
-ExportToCsv.prototype._formatData = function (data) {
-  if (this._options.decimalSeparator === 'locale' && this._isFloat(data)) {
-    return data.toLocaleString();
-  }
-  if (this._options.decimalSeparator !== '.' && this._isFloat(data)) {
-    return data.toString().replace('.', this._options.decimalSeparator);
-  }
-  if (typeof data === 'string') {
-    data = data.replace(/"/g, '""');
-    if (this._options.quoteStrings || data.indexOf(',') > -1 || data.indexOf('\n') > -1 || data.indexOf('\r') > -1) {
-      data = this._options.quoteStrings + data + this._options.quoteStrings;
-    }
-    return data;
-  }
-  if (typeof data === 'boolean') {
-    return data ? 'TRUE' : 'FALSE';
-  }
-  return data;
-};
-
 const exportCSV = (obj, invisibleColumns) => {
   const options = {
     fieldSeparator: ',',

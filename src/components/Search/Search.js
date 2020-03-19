@@ -7,6 +7,7 @@ const SearchField = ({ onSearchChange, search }) => (
   <form noValidate autoComplete="off">
     <TextField
       defaultValue={search}
+      className="searchField"
       label="Search"
       variant="outlined"
       color="primary"

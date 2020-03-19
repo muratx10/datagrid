@@ -25,3 +25,7 @@ const app = (
 );
 
 ReactDOM.render(app, root);
+
+document.querySelector('.searchField input').addEventListener('keypress', (e) => {
+  if (e.keyCode === 13) e.preventDefault();
+});
