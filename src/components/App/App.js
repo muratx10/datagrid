@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import t, { number, string } from 'prop-types';
 import {
   Typography,
   Chip,
@@ -12,9 +12,7 @@ import {
   Button,
 } from '@material-ui/core';
 import './App.scss';
-import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { ExportToCsv } from 'export-to-csv';
 import Badge from 'react-bootstrap/Badge';
 import MultiSelect from '../MultiSelect/MultiSelect';
 import DataSheet from '../DataSheet';
@@ -28,42 +26,8 @@ import {
   setInvisibleColumn,
 } from '../../store/actions/app';
 import rowsSelector from '../../store/selectors/selector';
-
-const exportCSV = (obj, invisibleColumns) => {
-  const options = {
-    fieldSeparator: ',',
-    quoteStrings: '"',
-    decimalSeparator: '.',
-    showLabels: true,
-    showTitle: true,
-    title: 'Data CSV',
-    useTextFile: false,
-    useBom: true,
-    useKeysAsHeaders: true,
-  };
-
-  const csvExporter = new ExportToCsv(options);
-  let newData = obj.map((i) => {
-    const location = `${i.locationName.city} ${i.locationName.zipcode}`;
-    const status = i.isActive === true ? 'ACTIVE' : 'LOCKED';
-    const residence = i.residence === true ? 'resident' : 'non-resident';
-    const birthDate = invisibleColumns.includes('birthDate') ? '' : i.birthDate;
-    const company = invisibleColumns.includes('companyName') ? '' : i.companyName;
-    return {
-      ID: i.id,
-      NAME: i.name,
-      RESIDENCE: residence,
-      'DATE OF BIRTH': birthDate,
-      ADDRESS: location,
-      COMPANY: company,
-      CURRENCY: i.currency,
-      BALANCE: i.amount,
-      CARD: i.card,
-      STATUS: status,
-    };
-  });
-  csvExporter.generateCsv(newData);
-};
+import exportCSV from '../utils/exportCSV';
+import faker from 'faker';
 
 const App = ({
   toggleActive,
@@ -201,6 +165,34 @@ const App = ({
     </div>
   </>
 );
+
+App.propTypes = {
+  toggleActive: t.func.isRequired,
+  deleteRows: t.func.isRequired,
+  data: t.arrayOf(t.shape({
+    id: t.number.isRequired,
+    name: t.string.isRequired,
+    birthDate: t.string.isRequired,
+    companyName: t.string.isRequired,
+    amount: t.number.isRequired,
+    currency: t.string.isRequired,
+    residence: t.bool.isRequired,
+    card: t.string.isRequired,
+    locationName: t.shape({
+      city: t.string.isRequired,
+      zipcode: t.string.isRequired,
+    }),
+    isActive: t.bool.isRequired,
+  })).isRequired,
+  hideColumn: t.func.isRequired,
+  invisibleColumns: t.oneOfType([
+    t.arrayOf(string),
+    string,
+  ]).isRequired,
+  setTurboMode: t.func.isRequired,
+  showActiveOnly: t.string.isRequired,
+  turboMode: t.bool.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   data: rowsSelector(state),
