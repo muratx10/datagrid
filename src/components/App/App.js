@@ -36,14 +36,21 @@ const exportCSV = (obj, invisibleColumns) => {
     decimalSeparator: '.',
     showLabels: true,
     showTitle: true,
-    title: 'My Awesome CSV',
+    title: 'Data CSV',
     useTextFile: false,
     useBom: true,
     useKeysAsHeaders: true,
   };
 
   const csvExporter = new ExportToCsv(options);
-  let newData = [...obj];
+  let newData = obj.map((i) => {
+    if (i.locationName) {
+      return {
+        ...i,
+        locationName: `${i.locationName.city} ${i.locationName.zipcode}`,
+      };
+    }
+  });
   if (invisibleColumns.length !== 0) { // only for exportCSV
     newData = newData.map((row) => {
       const clone = { ...row };
@@ -176,7 +183,7 @@ const App = ({
     <div style={{
       width: '90vw',
       height: '75vh',
-      minWidth: '980px',
+      minWidth: '1230px',
       overflow: 'scroll',
       margin: '0 auto',
       borderRadius: '5px',
