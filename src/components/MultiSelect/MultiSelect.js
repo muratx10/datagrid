@@ -19,7 +19,7 @@ const options = [
   },
   {
     value: 'Halva',
-    label: 'Halva',
+    label: 'Halva 😀',
   },
 ];
 
