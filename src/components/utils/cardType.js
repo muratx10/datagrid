@@ -3,6 +3,7 @@ import React from 'react';
 import visa from '../../assets/visa.png';
 import mastercard from '../../assets/mastercard.svg.png';
 import maestro from '../../assets/maestro.png';
+import halva from '../../assets/halva.png';
 
 const cardImg = (type) => {
   switch (type) {
@@ -27,6 +28,14 @@ const cardImg = (type) => {
         <FigureImage
           src={maestro}
           alt="VISA logo"
+          className="cardLogo"
+        />
+      );
+    case 'Halva':
+      return (
+        <FigureImage
+          src={halva}
+          alt="HALVA logo"
           className="cardLogo"
         />
       );

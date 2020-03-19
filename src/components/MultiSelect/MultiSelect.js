@@ -17,11 +17,15 @@ const options = [
     value: 'Maestro',
     label: 'Maestro',
   },
+  {
+    value: 'Halva',
+    label: 'Halva',
+  },
 ];
 
 const MultiSelect = ({ sort, invisibleCards }) => ( //
   <Select
-    placeholder="Hide enum items"
+    placeholder="Hide selected cards (ENUM)"
     defaultValue={invisibleCards}
     isMulti
     name="multiselect"
@@ -32,7 +36,7 @@ const MultiSelect = ({ sort, invisibleCards }) => ( //
     styles={{
       menu: (provided) => ({ ...provided, zIndex: 99999 }),
       container: () => ({
-        minWidth: 250,
+        minWidth: 270,
         position: 'absolute',
         right: '10%',
       }),

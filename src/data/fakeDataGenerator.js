@@ -13,7 +13,7 @@ const generateFakeData = (id) => ({
   amount: Math.trunc(faker.finance.amount()),
   currency: faker.finance.currencyName(),
   residence: faker.random.boolean(),
-  card: faker.random.arrayElement(['Visa', 'Mastercard', 'Maestro']),
+  card: faker.random.arrayElement(['Visa', 'Mastercard', 'Maestro', 'Halva']),
   locationName: {
     city: faker.address.city(),
     zipcode: faker.address.zipCode(),
